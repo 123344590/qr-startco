@@ -1,33 +1,36 @@
 /* =========================================
-   T-ASISTO · Formulario de Contacto
-   Estilos inspirados en el carrusel original
+   T-ASISTO · Formulario — Tema Futurista
    ========================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
 
-/* ── Variables (mismo sistema del carrusel) ── */
+/* ── Variables — Tema futurista oscuro ── */
 :root {
-  --blue:        #0059E2;
-  --blue-mid:    #0047B3;
-  --blue-light:  #abd8f7;
-  --blue-glow:   rgba(0,89,226,0.22);
-  --purple:      #6366F1;
-  --green:       #0891B2;
-  --red:         #EF4444;
-  --amber:       #F59E0B;
-  --dark:        #04111f;
-  --dark-2:      #071e38;
-  --text:        #061a33;
-  --muted:       #2d5070;
-  --bg-start:    #e6f4fc;
-  --bg-end:      #abd8f7;
+  --blue:        #0a90ff;
+  --blue-mid:    #0060dd;
+  --blue-light:  #55c0ff;
+  --cyan:        #00e5ff;
+  --purple:      #8b5cf6;
+  --green:       #00e096;
+  --red:         #ff4466;
+  --amber:       #fbbf24;
+  --dark:        #020c18;
+  --dark-2:      #071828;
+  --dark-3:      #0b2244;
+  --text:        #ddeeff;
+  --muted:       #5a88aa;
+  --bg-start:    #030e1c;
+  --bg-end:      #071828;
   --white:       #ffffff;
-  --radius-lg:   20px;
-  --radius-xl:   28px;
-  --shadow-sm:   0 4px 16px rgba(0,89,226,0.09);
-  --shadow-md:   0 8px 32px rgba(0,89,226,0.14);
-  --shadow-lg:   0 20px 60px rgba(0,89,226,0.20);
-  --glow:        0 0 0 1px rgba(0,89,226,0.14), 0 8px 40px rgba(0,89,226,0.14);
+  --card-bg:     rgba(7,20,42,0.92);
+  --border:      rgba(0,144,255,0.18);
+  --border-glow: rgba(0,229,255,0.32);
+  --radius-lg:   18px;
+  --radius-xl:   26px;
+  --shadow-sm:   0 4px 20px rgba(0,80,200,0.14);
+  --shadow-md:   0 8px 40px rgba(0,60,160,0.24);
+  --shadow-lg:   0 24px 80px rgba(0,10,40,0.75);
+  --glow:        0 0 0 1px rgba(0,229,255,0.18), 0 8px 40px rgba(0,100,255,0.2);
   --transition:  0.65s cubic-bezier(0.77,0,0.18,1);
 }
 
@@ -43,10 +46,9 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', sans-serif;
   background:
-    linear-gradient(rgba(0,89,226,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,89,226,0.03) 1px, transparent 1px),
-    radial-gradient(ellipse 90% 70% at 60% 40%, #ddf0fb 0%, #c6e5f7 50%, #abd8f7 100%);
-  background-size: 52px 52px, 52px 52px, 100% 100%;
+    radial-gradient(ellipse 130% 70% at 50% -5%, rgba(0,144,255,0.13), transparent 55%),
+    radial-gradient(ellipse 70% 80% at 85% 95%, rgba(139,92,246,0.09), transparent 60%),
+    linear-gradient(160deg, #020c18 0%, #040f20 50%, #071828 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -55,6 +57,20 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Grid futurista de fondo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(0,144,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,144,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* =========================================
@@ -76,30 +92,30 @@ body {
 
 .s1 {
   width: 700px; height: 700px;
-  background: radial-gradient(circle, rgba(0,89,226,0.10), transparent 68%);
-  top: -250px; right: -150px;
-  animation: float 9s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(0,120,255,0.13), transparent 68%);
+  top: -250px; right: -120px;
+  animation: float 10s ease-in-out infinite;
 }
 
 .s2 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(0,89,226,0.08), transparent 68%);
-  bottom: -120px; left: -60px;
-  animation: float 7s ease-in-out infinite reverse;
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(139,92,246,0.10), transparent 68%);
+  bottom: -120px; left: -80px;
+  animation: float 8s ease-in-out infinite reverse;
 }
 
 .s3 {
-  width: 280px; height: 280px;
-  background: radial-gradient(circle, rgba(99,102,241,0.10), transparent 68%);
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(0,229,255,0.08), transparent 68%);
   top: 40%; left: 25%;
-  animation: float 11s ease-in-out infinite 2s;
+  animation: float 12s ease-in-out infinite 2s;
 }
 
 .s4 {
-  width: 180px; height: 180px;
-  background: radial-gradient(circle, rgba(0,89,226,0.07), transparent 68%);
-  top: 10%; left: 40%;
-  animation: float 8s ease-in-out infinite 1s;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(0,144,255,0.07), transparent 68%);
+  top: 10%; left: 42%;
+  animation: float 9s ease-in-out infinite 1s;
 }
 
 @keyframes float {
@@ -136,6 +152,16 @@ body {
   to   { stroke-dashoffset: 0; }
 }
 
+@keyframes shimmer {
+  0%   { transform: translateX(-120%); }
+  100% { transform: translateX(250%); }
+}
+
+@keyframes border-glow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(0,229,255,0.2), 0 0 20px rgba(0,144,255,0.15); }
+  50%       { box-shadow: 0 0 0 1px rgba(0,229,255,0.45), 0 0 40px rgba(0,144,255,0.35); }
+}
+
 /* =========================================
    LAYOUT PRINCIPAL
    ========================================= */
@@ -148,7 +174,7 @@ body {
   width: 100%;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-lg), 0 0 0 1px rgba(0,144,255,0.1);
   animation: fadeInUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
 }
 
@@ -156,22 +182,23 @@ body {
    COLUMNA IZQUIERDA — Branding
    ========================================= */
 .brand-col {
-  flex: 0 0 360px;
-  background: linear-gradient(148deg, #0041a8 0%, #0059E2 45%, #1a8cff 100%);
+  flex: 0 0 340px;
+  background: linear-gradient(160deg, #030f26 0%, #04183d 50%, #071d4f 100%);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
-  padding: 48px 40px;
+  padding: 48px 38px;
+  border-right: 1px solid rgba(0,144,255,0.1);
 }
 
-/* Línea de escaneo en brand */
+/* Línea de escaneo */
 .brand-col::after {
   content: '';
   position: absolute;
   left: 0; right: 0;
-  height: 120px;
-  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.06), transparent);
+  height: 140px;
+  background: linear-gradient(180deg, transparent, rgba(0,229,255,0.07), transparent);
   animation: scan-line 5s linear infinite;
   pointer-events: none;
 }
@@ -182,9 +209,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(rgba(0,144,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,144,255,0.06) 1px, transparent 1px);
+  background-size: 36px 36px;
   pointer-events: none;
 }
 
@@ -197,17 +224,15 @@ body {
 }
 
 .brand-logo-wrap {
-  width: 80px; height: 80px;
-  border-radius: 22px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255,255,255,0.3);
+  width: 76px; height: 76px;
+  border-radius: 20px;
+  background: rgba(0,144,255,0.12);
+  border: 1px solid rgba(0,229,255,0.28);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
-  animation: glow-pulse 3.5s ease-in-out infinite;
+  padding: 13px;
+  animation: border-glow 3.5s ease-in-out infinite;
   margin: 0 auto 4px;
   align-self: center;
 }
@@ -221,16 +246,19 @@ body {
 
 .brand-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 40px;
+  font-size: 38px;
   font-weight: 800;
   letter-spacing: -2px;
-  color: #fff;
+  background: linear-gradient(135deg, #ffffff 0%, var(--blue-light) 55%, var(--cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1;
 }
 
 .brand-sub {
-  font-size: 15px;
-  color: rgba(255,255,255,0.75);
+  font-size: 13.5px;
+  color: rgba(160,210,255,0.55);
   font-weight: 400;
   margin-top: -8px;
 }
@@ -246,18 +274,17 @@ body {
 .feature-item {
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 14px;
-  padding: 12px 16px;
-  transition: background 0.25s, transform 0.25s;
+  gap: 12px;
+  background: rgba(0,100,255,0.08);
+  border: 1px solid rgba(0,144,255,0.16);
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: background 0.25s, border-color 0.25s, transform 0.25s;
 }
 
 .feature-item:hover {
-  background: rgba(255,255,255,0.16);
+  background: rgba(0,144,255,0.14);
+  border-color: rgba(0,229,255,0.28);
   transform: translateX(4px);
 }
 
@@ -274,26 +301,29 @@ body {
 }
 
 .feature-item strong {
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 700;
-  color: #fff;
+  color: rgba(210,235,255,0.92);
 }
 
 .feature-item span {
-  font-size: 11.5px;
-  color: rgba(255,255,255,0.68);
+  font-size: 11px;
+  color: rgba(140,190,230,0.55);
 }
 
 .brand-badge {
-  display: inline-block;
-  padding: 8px 20px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.24);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  background: rgba(0,229,255,0.07);
+  border: 1px solid rgba(0,229,255,0.22);
   border-radius: 100px;
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 700;
-  color: rgba(255,255,255,0.9);
-  letter-spacing: 1px;
+  color: var(--cyan);
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
   align-self: flex-start;
   margin-top: 8px;
 }
@@ -303,9 +333,7 @@ body {
    ========================================= */
 .form-col {
   flex: 1;
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--card-bg);
   display: flex;
   align-items: stretch;
 }
@@ -326,39 +354,39 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
-  color: var(--blue);
+  letter-spacing: 2.8px;
+  color: var(--cyan);
   margin-bottom: 10px;
 }
 
 .form-label::before {
   content: '';
   display: block;
-  width: 18px; height: 2px;
-  background: var(--blue);
+  width: 18px; height: 1.5px;
+  background: var(--cyan);
   border-radius: 2px;
 }
 
 .form-title {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(22px, 3vw, 30px);
+  font-size: clamp(20px, 3vw, 28px);
   font-weight: 800;
-  background: linear-gradient(135deg, #041e3a 0%, var(--blue) 100%);
+  background: linear-gradient(135deg, #ddeeff 0%, var(--blue-light) 55%, var(--cyan) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.6px;
   line-height: 1.15;
   margin-bottom: 8px;
 }
 
 .form-desc {
-  font-size: 14.5px;
+  font-size: 13.5px;
   color: var(--muted);
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 /* ── Filas y campos ── */
@@ -385,10 +413,10 @@ body {
 }
 
 .field-wrap label {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.2px;
+  color: rgba(180,215,255,0.7);
+  letter-spacing: 0.3px;
 }
 
 /* ── Input wrapper ── */
@@ -431,11 +459,11 @@ textarea {
   width: 100%;
   padding: 11px 14px 11px 40px;
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--text);
-  background: rgba(255,255,255,0.8);
-  border: 1.5px solid rgba(0,89,226,0.18);
-  border-radius: 12px;
+  background: rgba(3,14,34,0.75);
+  border: 1px solid rgba(0,144,255,0.2);
+  border-radius: 10px;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
   -webkit-appearance: none;
@@ -447,15 +475,15 @@ input[type="email"]:focus,
 input[type="tel"]:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,89,226,0.12);
-  background: #fff;
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.1), 0 0 14px rgba(0,144,255,0.12);
+  background: rgba(0,18,48,0.85);
 }
 
 input[type="text"]:focus ~ .input-icon,
 input[type="email"]:focus ~ .input-icon,
 input[type="tel"]:focus ~ .input-icon {
-  color: var(--blue);
+  color: var(--cyan);
 }
 
 input[type="text"].invalid,
@@ -463,12 +491,12 @@ input[type="email"].invalid,
 select.invalid,
 textarea.invalid {
   border-color: var(--red);
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.10);
+  box-shadow: 0 0 0 3px rgba(255,68,102,0.1);
 }
 
 input::placeholder,
 textarea::placeholder {
-  color: rgba(45,80,112,0.4);
+  color: rgba(80,130,170,0.38);
 }
 
 textarea {
@@ -557,8 +585,8 @@ select {
   flex-shrink: 0;
   width: 20px; height: 20px;
   border-radius: 6px;
-  border: 1.5px solid rgba(0,89,226,0.3);
-  background: rgba(255,255,255,0.8);
+  border: 1px solid rgba(0,144,255,0.3);
+  background: rgba(0,20,50,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -577,8 +605,8 @@ select {
 
 .checkbox-wrap input:checked + .custom-check {
   background: var(--blue);
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,89,226,0.15);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0,229,255,0.3);
 }
 
 .checkbox-wrap input:checked + .custom-check svg {
@@ -593,7 +621,7 @@ select {
 }
 
 .link {
-  color: var(--blue);
+  color: var(--cyan);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -605,32 +633,43 @@ select {
   width: 100%;
   margin-top: 20px;
   padding: 14px 28px;
-  background: linear-gradient(135deg, var(--blue-mid) 0%, var(--blue) 60%, #2196ff 100%);
+  background: linear-gradient(135deg, #0050cc 0%, var(--blue) 50%, #00c0ff 100%);
   color: #fff;
   border: none;
-  border-radius: 14px;
+  border-radius: 12px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 700;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 18px rgba(0,89,226,0.35);
-  transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-  letter-spacing: 0.2px;
+  box-shadow: 0 4px 24px rgba(0,100,255,0.45), 0 0 0 1px rgba(0,229,255,0.18);
+  transition: transform 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.3px;
+}
+
+/* Shimmer animado */
+.btn-submit::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 35%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  animation: shimmer 2.8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .btn-submit::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+  background: linear-gradient(180deg, rgba(255,255,255,0.09), transparent);
   pointer-events: none;
 }
 
 .btn-submit:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(0,89,226,0.45);
+  box-shadow: 0 8px 32px rgba(0,100,255,0.60), 0 0 0 1px rgba(0,229,255,0.38);
 }
 
 .btn-submit:active:not(:disabled) {
@@ -638,7 +677,7 @@ select {
 }
 
 .btn-submit:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -648,6 +687,8 @@ select {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
 .btn-loading { display: none; }
@@ -678,14 +719,13 @@ select {
   justify-content: center;
   text-align: center;
   gap: 16px;
-  padding: 24px 12px;
   animation: scaleIn 0.45s cubic-bezier(0.22,1,0.36,1) both;
   position: absolute;
   inset: 0;
-  background: rgba(255,255,255,0.72);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  padding: 60px 48px;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 60px 44px;
 }
 
 .state-panel.visible {
@@ -705,40 +745,40 @@ select {
 }
 
 .success-icon {
-  background: rgba(8,145,178,0.1);
-  border: 2px solid rgba(8,145,178,0.3);
+  background: rgba(0,224,150,0.1);
+  border: 1px solid rgba(0,224,150,0.3);
   color: var(--green);
-  animation: glow-pulse 3s ease-in-out infinite;
+  animation: border-glow 3s ease-in-out infinite;
 }
 
 .success-icon svg { width: 46px; height: 46px; }
 
 .success-panel h3 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 800;
-  background: linear-gradient(135deg, #041e3a 0%, var(--blue) 100%);
+  background: linear-gradient(135deg, #ddeeff 0%, var(--blue-light) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .success-panel p {
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--muted);
   line-height: 1.65;
-  max-width: 340px;
+  max-width: 320px;
 }
 
 .ticket-info {
-  background: rgba(0,89,226,0.07);
-  border: 1px solid rgba(0,89,226,0.2);
-  border-radius: 12px;
-  padding: 12px 22px;
-  font-size: 13px;
-  color: var(--blue);
+  background: rgba(0,144,255,0.1);
+  border: 1px solid rgba(0,144,255,0.22);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 12.5px;
+  color: var(--blue-light);
   font-weight: 600;
-  min-height: 40px;
+  min-height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -747,11 +787,11 @@ select {
 .ticket-info:empty { display: none; }
 
 /* ── Error ── */
-.error-panel { background: rgba(255,245,245,0.88); }
+.error-panel { background: rgba(20,4,10,0.95); }
 
 .error-icon {
-  background: rgba(239,68,68,0.08);
-  border: 2px solid rgba(239,68,68,0.25);
+  background: rgba(255,68,102,0.1);
+  border: 1px solid rgba(255,68,102,0.26);
   color: var(--red);
 }
 
@@ -759,25 +799,25 @@ select {
 
 .error-panel h3 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 800;
-  color: #b91c1c;
+  color: #ff7799;
 }
 
 .error-panel p {
-  font-size: 14.5px;
-  color: #7f1d1d;
+  font-size: 14px;
+  color: rgba(200,140,155,0.85);
   line-height: 1.6;
-  max-width: 320px;
+  max-width: 300px;
 }
 
 /* ── Botones de reset / retry ── */
 .btn-reset,
 .btn-retry {
-  padding: 12px 32px;
-  border-radius: 12px;
+  padding: 11px 28px;
+  border-radius: 10px;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
   border: none;
@@ -788,19 +828,18 @@ select {
 .btn-reset {
   background: linear-gradient(135deg, var(--blue-mid) 0%, var(--blue) 100%);
   color: #fff;
-  box-shadow: 0 4px 14px rgba(0,89,226,0.30);
+  box-shadow: 0 4px 18px rgba(0,100,255,0.38);
 }
 
-.btn-reset:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,89,226,0.40); }
+.btn-reset:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,100,255,0.52); }
 
 .btn-retry {
-  background: #fff;
+  background: rgba(255,68,102,0.1);
   color: var(--red);
-  border: 1.5px solid rgba(239,68,68,0.3);
-  box-shadow: 0 4px 14px rgba(239,68,68,0.12);
+  border: 1px solid rgba(255,68,102,0.28);
 }
 
-.btn-retry:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(239,68,68,0.20); }
+.btn-retry:hover { transform: translateY(-2px); background: rgba(255,68,102,0.17); }
 
 /* =========================================
    PREGUNTAS DE DIAGNÓSTICO INTERACTIVAS
@@ -812,9 +851,9 @@ select {
 }
 
 .diag-q-label {
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 600;
-  color: var(--text);
+  color: rgba(190,220,255,0.82);
   margin-bottom: 10px;
   line-height: 1.5;
 }
@@ -844,29 +883,28 @@ select {
 .chip span {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   border-radius: 100px;
-  font-size: 13px;
+  font-size: 12.5px;
   font-weight: 500;
   color: var(--muted);
-  background: rgba(255,255,255,0.75);
-  border: 1.5px solid rgba(0,89,226,0.18);
+  background: rgba(0,25,65,0.65);
+  border: 1px solid rgba(0,144,255,0.2);
   transition: all 0.18s;
   white-space: nowrap;
 }
 
 .chip span:hover {
-  border-color: var(--blue);
-  color: var(--blue);
-  background: rgba(0,89,226,0.05);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,229,255,0.06);
 }
 
 .chip input:checked + span {
-  background: var(--blue);
-  color: #fff;
+  background: rgba(0,100,255,0.22);
+  color: var(--blue-light);
   border-color: var(--blue);
-  box-shadow: 0 3px 10px rgba(0,89,226,0.28);
+  box-shadow: 0 0 14px rgba(0,144,255,0.22);
 }
 
 /* Input "Otro" que aparece al seleccionar ese chip */
@@ -874,19 +912,19 @@ select {
   margin-top: 8px;
   width: 100%;
   padding: 9px 14px;
-  border: 1.5px solid rgba(0,89,226,0.22);
+  border: 1px solid rgba(0,144,255,0.2);
   border-radius: 10px;
-  font-size: 13.5px;
+  font-size: 13px;
   font-family: 'Inter', sans-serif;
   color: var(--text);
-  background: rgba(255,255,255,0.8);
+  background: rgba(0,18,48,0.7);
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .otro-input:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,89,226,0.1);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
 }
 
 /* ── Radio cards ── */
@@ -899,19 +937,19 @@ select {
 .radio-card {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 14px;
-  border-radius: 12px;
-  border: 1.5px solid rgba(0,89,226,0.15);
-  background: rgba(255,255,255,0.7);
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,144,255,0.15);
+  background: rgba(0,18,48,0.55);
   cursor: pointer;
   user-select: none;
   transition: all 0.18s;
 }
 
 .radio-card:hover {
-  border-color: rgba(0,89,226,0.35);
-  background: rgba(0,89,226,0.04);
+  border-color: rgba(0,229,255,0.3);
+  background: rgba(0,40,95,0.65);
 }
 
 .radio-card input[type="radio"] {
@@ -922,41 +960,56 @@ select {
 }
 
 .radio-card input:checked ~ .radio-text {
-  color: var(--blue);
+  color: var(--blue-light);
   font-weight: 600;
 }
 
 .radio-card:has(input:checked) {
   border-color: var(--blue);
-  background: rgba(0,89,226,0.07);
-  box-shadow: 0 2px 10px rgba(0,89,226,0.12);
+  background: rgba(0,80,210,0.16);
+  box-shadow: 0 0 0 1px rgba(0,144,255,0.1), 0 2px 16px rgba(0,80,200,0.18);
+}
+
+/* Dot indicator — reemplaza los emojis */
+.radio-card::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(0,144,255,0.4);
+  background: transparent;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.radio-card:has(input:checked)::before {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 8px rgba(0,229,255,0.55);
 }
 
 .radio-icon {
-  font-size: 18px;
-  flex-shrink: 0;
-  width: 26px;
-  text-align: center;
+  display: none; /* Ocultar emojis — reemplazados por el dot CSS */
 }
 
 .radio-text {
-  font-size: 13.5px;
-  color: var(--text);
+  font-size: 13px;
+  color: var(--muted);
   transition: color 0.18s;
+  line-height: 1.4;
 }
 
 /* =========================================
    SECCIÓN DE TÍTULO DE FORMULARIO
    ========================================= */
 .form-section-title {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2.2px;
-  color: var(--blue);
-  margin: 8px 0 14px;
+  letter-spacing: 2.8px;
+  color: rgba(0,210,255,0.65);
+  margin: 10px 0 14px;
   padding-bottom: 8px;
-  border-bottom: 1.5px solid rgba(0,89,226,0.13);
+  border-bottom: 1px solid rgba(0,144,255,0.12);
 }
 
 /* =========================================
@@ -976,16 +1029,17 @@ select {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 18px;
-  background: linear-gradient(135deg, #0041a8 0%, #0059E2 100%);
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #030f26 0%, #041a3e 100%);
+  border-bottom: 1px solid rgba(0,144,255,0.14);
   flex-shrink: 0;
 }
 
 .chat-avatar {
-  width: 40px; height: 40px;
+  width: 38px; height: 38px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  border: 2px solid rgba(255,255,255,0.38);
+  background: rgba(0,144,255,0.14);
+  border: 1px solid rgba(0,229,255,0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1008,25 +1062,26 @@ select {
 }
 
 .chat-header-info strong {
-  font-size: 13.5px;
+  font-size: 13px;
   font-weight: 700;
-  color: #fff;
+  color: rgba(215,238,255,0.95);
 }
 
 .chat-status {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 11.5px;
-  color: rgba(255,255,255,0.78);
+  font-size: 11px;
+  color: rgba(140,190,230,0.6);
 }
 
 .chat-dot {
-  width: 7px; height: 7px;
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: #4ade80;
+  background: var(--green);
   flex-shrink: 0;
   animation: chat-dot-pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 6px rgba(0,224,150,0.5);
 }
 
 @keyframes chat-dot-pulse {
@@ -1035,13 +1090,13 @@ select {
 }
 
 .chat-ticket-badge {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  color: rgba(255,255,255,0.88);
-  background: rgba(255,255,255,0.14);
-  border: 1px solid rgba(255,255,255,0.28);
+  color: var(--blue-light);
+  background: rgba(0,144,255,0.12);
+  border: 1px solid rgba(0,144,255,0.24);
   border-radius: 20px;
-  padding: 4px 11px;
+  padding: 3px 10px;
   flex-shrink: 0;
   display: none;
 }
@@ -1052,17 +1107,19 @@ select {
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 18px 18px 10px;
+  padding: 16px 16px 10px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   min-height: 200px;
-  max-height: calc(100% - 180px);
+  max-height: calc(100% - 70px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,144,255,0.2) transparent;
 }
 
 .chat-messages::-webkit-scrollbar { width: 4px; }
 .chat-messages::-webkit-scrollbar-track { background: transparent; }
-.chat-messages::-webkit-scrollbar-thumb { background: rgba(0,89,226,0.18); border-radius: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(0,144,255,0.22); border-radius: 4px; }
 
 .chat-bubble-wrap {
   display: flex;
@@ -1076,19 +1133,20 @@ select {
 .wrap-typing { justify-content: flex-start; }
 
 .chat-bubble {
-  max-width: 78%;
+  max-width: 80%;
   padding: 10px 14px;
   border-radius: 16px;
   font-size: 13px;
-  line-height: 1.55;
+  line-height: 1.6;
   word-wrap: break-word;
-  white-space: pre-wrap;
 }
 
 .bubble-user {
-  background: linear-gradient(135deg, var(--blue-mid), var(--blue));
-  color: #fff;
+  background: linear-gradient(135deg, #0050cc, var(--blue));
+  color: rgba(255,255,255,0.92);
   border-bottom-right-radius: 4px;
+  border: 1px solid rgba(0,200,255,0.14);
+  box-shadow: 0 2px 16px rgba(0,80,200,0.35);
 }
 
 /* Filas con icono alineado dentro de la burbuja de usuario */
@@ -1113,34 +1171,29 @@ select {
 }
 
 .bubble-agent {
-  background: #fff;
+  background: rgba(6,18,44,0.9);
   color: var(--text);
-  border: 1px solid rgba(0,89,226,0.12);
+  border: 1px solid rgba(0,144,255,0.18);
   border-bottom-left-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 14px rgba(0,0,0,0.35);
 }
 
-/* Links dentro de burbujas del agente */
+/* Links en burbujas */
 .bubble-agent .chat-link {
-  color: var(--blue);
+  color: var(--cyan);
   text-decoration: underline;
   text-underline-offset: 2px;
   word-break: break-all;
 }
-.bubble-agent .chat-link:hover {
-  color: var(--blue-mid);
-}
+.bubble-agent .chat-link:hover { opacity: 0.8; }
 
-/* Links dentro de burbujas del usuario (fondo azul) */
 .bubble-user .chat-link {
-  color: #fff;
+  color: rgba(255,255,255,0.92);
   text-decoration: underline;
   text-underline-offset: 2px;
-  opacity: 0.9;
+  opacity: 0.88;
 }
-.bubble-user .chat-link:hover {
-  opacity: 1;
-}
+.bubble-user .chat-link:hover { opacity: 1; }
 
 /* ── Typing dots ── */
 .typing-bubble { padding: 12px 16px; min-width: 56px; }
@@ -1154,8 +1207,9 @@ select {
 .typing-dots span {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--muted);
+  background: var(--blue-light);
   animation: typing-bounce 1.2s ease-in-out infinite;
+  opacity: 0.5;
 }
 
 .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
@@ -1172,18 +1226,18 @@ select {
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  border-top: 1px solid rgba(0,89,226,0.1);
-  background: rgba(255,255,255,0.92);
+  border-top: 1px solid rgba(0,144,255,0.1);
+  background: rgba(2,10,26,0.95);
   flex-shrink: 0;
 }
 
 .chat-input-wrap input[type="text"] {
   flex: 1;
-  padding: 10px 14px;
-  border: 1.5px solid rgba(0,89,226,0.18);
+  padding: 9px 14px;
+  border: 1px solid rgba(0,144,255,0.2);
   border-radius: 22px;
-  font-size: 13.5px;
-  background: #fff;
+  font-size: 13px;
+  background: rgba(0,18,48,0.85);
   outline: none;
   font-family: 'Inter', sans-serif;
   color: var(--text);
@@ -1192,8 +1246,8 @@ select {
 }
 
 .chat-input-wrap input[type="text"]:focus {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px rgba(0,89,226,0.1);
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 3px rgba(0,229,255,0.1);
 }
 
 #chatSend {
@@ -1229,28 +1283,35 @@ select {
 }
 
 /* =========================================
-   RESPONSIVO
+   RESPONSIVO — Diseño adaptable completo
    ========================================= */
-@media (max-width: 820px) {
+
+/* Tablet grande */
+@media (max-width: 860px) {
   body { padding: 20px 16px; align-items: flex-start; }
 
   .page-wrapper {
     flex-direction: column;
     border-radius: var(--radius-lg);
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto;
   }
 
   .brand-col {
     flex: none;
-    padding: 36px 32px;
+    padding: 28px 32px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0,144,255,0.1);
   }
 
+  .brand-inner { flex-direction: row; align-items: center; gap: 18px; flex-wrap: wrap; }
+  .brand-logo-wrap { margin: 0; flex-shrink: 0; }
   .brand-features { display: none; }
+  .brand-badge { margin-top: 0; }
+  .brand-title { font-size: 30px; }
+  .brand-sub { display: none; }
 
-  .brand-title { font-size: 34px; }
-
-  .form-card { padding: 36px 28px; }
+  .form-card { padding: 32px 28px; }
 
   .form-row {
     flex-direction: column;
@@ -1258,10 +1319,43 @@ select {
   }
 }
 
-@media (max-width: 480px) {
-  .form-card { padding: 28px 20px; }
-  .brand-col  { padding: 28px 22px; }
-  .state-panel { padding: 40px 24px; }
+/* Móvil */
+@media (max-width: 520px) {
+  body { padding: 0; }
+
+  .page-wrapper {
+    border-radius: 0;
+    max-width: 100%;
+    min-height: 100dvh;
+    box-shadow: none;
+  }
+
+  .brand-col { padding: 18px 20px 16px; }
+  .brand-title { font-size: 24px; letter-spacing: -1px; }
+  .brand-logo-wrap { width: 46px; height: 46px; }
+
+  .form-card { padding: 24px 18px; }
+  .form-title { font-size: 19px; }
+  .form-desc { font-size: 12.5px; }
+
+  .diag-q-label { font-size: 12px; }
+  .chip span { font-size: 12px; padding: 5px 11px; }
+  .radio-card { padding: 9px 12px; }
+  .radio-text { font-size: 12.5px; }
+
+  .state-panel { padding: 36px 20px; }
+  .chat-bubble { max-width: 90%; font-size: 12.5px; }
+  .chat-messages { max-height: calc(100dvh - 80px); }
+  .chat-header { padding: 12px 16px; }
+
+  .brand-badge { font-size: 9.5px; padding: 5px 12px; }
+}
+
+/* Móvil pequeño */
+@media (max-width: 360px) {
+  .form-card { padding: 20px 14px; }
+  .brand-col  { padding: 14px 14px; }
+  .chip span  { font-size: 11.5px; padding: 5px 10px; }
 }
 
 
