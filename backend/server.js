@@ -14,10 +14,16 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
 app.use(express.json({ limit: '2mb' }));
 
 // ── Panel admin (archivos estáticos) ────────────────────────
-app.use('/admin',      express.static(path.join(__dirname, '../admin')));
+// En Docker: __dirname = /app  →  /app/admin  y  /app/formulario
+app.use('/admin',      express.static(path.join(__dirname, 'admin')));
 
-// ── Formulario público ────────────────────────────────────────
-app.use('/formulario', express.static(path.join(__dirname, '../formulario')));
+// ── Formulario público ─────────────────────────────────────
+app.use('/formulario', express.static(path.join(__dirname, 'formulario')));
+
+// ── Raíz → redirige al formulario ─────────────────────────
+app.get('/', (_req, res) =>
+  res.redirect('/formulario/formulario.html')
+);
 
 // ── Rutas API ────────────────────────────────────────────────
 app.use('/api/auth',     require('./routes/auth'));
