@@ -68,18 +68,23 @@ router.post('/submit', submitLimiter, async (req, res) => {
 // ────────────────────────────────────────────────────────────
 // POST /api/webhook/response
 // n8n llama aquí después de crear la conversación en Chatwoot.
-// Guarda el mensaje automático (primer / segundo mensaje).
-// Body esperado: { sessionId, mensaje, conversationId?, sourceId? }
+// Solo vincula el conversationId con la sesión (sin guardar mensaje).
+// Body esperado: { sessionId, conversationId?, sourceId? }
 // ────────────────────────────────────────────────────────────
 router.post('/response', async (req, res) => {
-  const { sessionId, mensaje, conversationId, sourceId } = req.body;
+  const { sessionId, conversationId, sourceId } = req.body;
 
-  if (!sessionId || !mensaje) {
-    return res.status(400).json({ error: 'sessionId y mensaje son requeridos' });
+  console.log('[response] recibido →', JSON.stringify({
+    sessionId: sessionId || '(vacío)',
+    conversationId: conversationId || '(vacío)',
+  }));
+
+  if (!sessionId) {
+    return res.status(400).json({ error: 'sessionId es requerido' });
   }
 
   try {
-    // Actualizar datos de Chatwoot si llegaron
+    // Vincular el conversationId de Chatwoot con la sesión
     if (conversationId) {
       await pool.query(`
         UPDATE sessions
@@ -90,12 +95,6 @@ router.post('/response', async (req, res) => {
         WHERE id = $3
       `, [conversationId, sourceId || null, sessionId]);
     }
-
-    // Guardar el mensaje
-    await pool.query(`
-      INSERT INTO messages (session_id, content, sender_type, sender_name)
-      VALUES ($1, $2, 'agent', 'T-ASISTO')
-    `, [sessionId, mensaje]);
 
     res.json({ ok: true });
   } catch (err) {
@@ -139,7 +138,7 @@ router.post('/agent-message', async (req, res) => {
 
     if (!resolvedSessionId) {
       // Sesión desconocida → ignorar silenciosamente (mensaje de bot u otro)
-      console.log('[agent-message] skipped → no se encontró sesión. conversationId buscado:', convIdInt);
+      console.log('[agent-message] skipped → no se encontró sesión. conversationId buscado:', conversationId);
       return res.json({ ok: true, skipped: true });
     }
 

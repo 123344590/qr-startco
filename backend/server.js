@@ -8,7 +8,8 @@ const path      = require('path');
 const { initDb } = require('./db');
 
 const app = express();
-
+// Confiar en el proxy inverso (Traefik/Nginx en Dokploy)
+app.set('trust proxy', 1);
 // ── Middlewares ──────────────────────────────────────────────
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'] }));
 app.use(express.json({ limit: '2mb' }));
