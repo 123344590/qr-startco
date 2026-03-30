@@ -155,12 +155,10 @@ function buildNotas(d) {
   return lineas.join('\n');
 }
 
-// ── Construir resumen visible en el chat (solo datos básicos) ───
+// ── Resumen en el chat: muestra el diagnóstico completo ─────
 function buildResumenChat(d) {
-  const filas = [{ icon: '👤', text: d.nombre }];
-  if (d.telefono) filas.push({ icon: '📞', text: d.telefono });
-  if (d.email)    filas.push({ icon: '✉️', text: d.email });
-  return filas;
+  // Reutiliza buildNotas() — mismo texto que llega a n8n/Chatwoot
+  return buildNotas(d);
 }
 
 // ── Chat: añadir burbuja ─────────────────────────────────────
