@@ -112,32 +112,46 @@ router.post('/response', async (req, res) => {
 // Body esperado: { sessionId, mensaje, senderName? }
 // ────────────────────────────────────────────────────────────
 router.post('/agent-message', async (req, res) => {
-  const { sessionId, mensaje, senderName } = req.body;
+  const { sessionId, conversationId, mensaje, senderName } = req.body;
 
-  if (!sessionId || !mensaje) {
-    return res.status(400).json({ error: 'sessionId y mensaje son requeridos' });
+  if (!mensaje) {
+    return res.status(400).json({ error: 'mensaje es requerido' });
   }
 
   try {
+    let resolvedSessionId = sessionId;
+
+    // Si no viene sessionId, buscar por chatwoot_conversation_id
+    if (!resolvedSessionId && conversationId) {
+      const { rows } = await pool.query(
+        'SELECT id FROM sessions WHERE chatwoot_conversation_id = $1 LIMIT 1',
+        [conversationId]
+      );
+      if (rows.length) resolvedSessionId = rows[0].id;
+    }
+
+    if (!resolvedSessionId) {
+      // Sesión desconocida → ignorar silenciosamente (mensaje de bot u otro)
+      return res.json({ ok: true, skipped: true });
+    }
+
     // Verificar que la sesión existe
-    const { rows } = await pool.query(
-      'SELECT id FROM sessions WHERE id = $1', [sessionId]
+    const { rows: sessionRows } = await pool.query(
+      'SELECT id FROM sessions WHERE id = $1', [resolvedSessionId]
     );
-    if (!rows.length) {
-      // Sesión desconocida → ignorar silenciosamente
+    if (!sessionRows.length) {
       return res.json({ ok: true, skipped: true });
     }
 
     await pool.query(`
       INSERT INTO messages (session_id, content, sender_type, sender_name)
       VALUES ($1, $2, 'agent', $3)
-    `, [sessionId, mensaje, senderName || 'Asesor']);
+    `, [resolvedSessionId, mensaje, senderName || 'Asesor']);
 
-    // Marcar sesión como activa si aún era pending
     await pool.query(`
       UPDATE sessions SET status = 'active', updated_at = NOW()
       WHERE id = $1 AND status = 'pending'
-    `, [sessionId]);
+    `, [resolvedSessionId]);
 
     res.json({ ok: true });
   } catch (err) {
