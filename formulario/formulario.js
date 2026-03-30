@@ -169,6 +169,15 @@ function escapeHtml(s) {
     .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+// Convierte URLs en el texto a <a> clicables (abre en nueva pestaña)
+function linkify(text) {
+  const urlRegex = /(https?:\/\/[^\s<>"']+)/g;
+  return escapeHtml(text).replace(urlRegex, url => {
+    // url ya está escapado por escapeHtml, lo usamos tal cual
+    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="chat-link">${url}</a>`;
+  });
+}
+
 function addChatBubble(text, type) {
   const wrap = document.createElement('div');
   wrap.classList.add('chat-bubble-wrap', `wrap-${type}`);
@@ -188,7 +197,8 @@ function addChatBubble(text, type) {
         .map(r => `<span class="bubble-row"><span class="bubble-icon">${r.icon}</span><span class="bubble-txt">${escapeHtml(r.text)}</span></span>`)
         .join('');
     } else {
-      bbl.textContent = text;
+      // Preserva saltos de línea y convierte URLs en links
+      bbl.innerHTML = linkify(String(text ?? '')).replace(/\n/g, '<br>');
     }
     wrap.appendChild(bbl);
   }
