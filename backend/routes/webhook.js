@@ -145,6 +145,26 @@ router.post('/agent-message', async (req, res) => {
       if (rows.length) resolvedSessionId = rows[0].id;
     }
 
+    // Fallback: si aún no hay sesión, buscar la sesión más reciente SIN
+    // chatwoot_conversation_id asignado y vincularla ahora
+    if (!resolvedSessionId && conversationId) {
+      const { rows } = await pool.query(`
+        SELECT id FROM sessions
+        WHERE chatwoot_conversation_id IS NULL
+        ORDER BY created_at DESC
+        LIMIT 1
+      `);
+      if (rows.length) {
+        resolvedSessionId = rows[0].id;
+        // Vincular retroactivamente
+        await pool.query(
+          `UPDATE sessions SET chatwoot_conversation_id = $1, status = 'active', updated_at = NOW() WHERE id = $2`,
+          [conversationId, resolvedSessionId]
+        );
+        console.log('[agent-message] fallback: vinculada sesión', resolvedSessionId, '→ conversationId', conversationId);
+      }
+    }
+
     if (!resolvedSessionId) {
       // Sesión desconocida → ignorar silenciosamente (mensaje de bot u otro)
       console.log('[agent-message] skipped → no se encontró sesión. conversationId buscado:', conversationId);
