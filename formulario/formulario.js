@@ -295,9 +295,10 @@ form.addEventListener('submit', async e => {
   btnSubmit.classList.add('loading');
   stopPolling();
 
-  // Mostrar panel de chat
+  // Mostrar panel de chat con burbuja del resumen del usuario
   chatMessages.innerHTML = '';
   showPanel(successPanel);
+  addChatBubble(buildResumenChat(datos), 'user');
   addChatBubble('', 'typing');
 
   try {

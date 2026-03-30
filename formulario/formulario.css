@@ -682,6 +682,7 @@ select {
   animation: scaleIn 0.45s cubic-bezier(0.22,1,0.36,1) both;
   position: absolute;
   inset: 0;
+  z-index: 10;
   background: rgba(255,255,255,0.72);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
