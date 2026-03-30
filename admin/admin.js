@@ -11,7 +11,6 @@ const API = window.location.hostname === 'localhost'
 let token           = localStorage.getItem('tasisto_token') || '';
 let currentConvId   = null;
 let searchTimeout   = null;
-let selectedIds     = new Set();
 
 // ────────────────────────────────────────────────────────────
 // INIT
@@ -151,10 +150,9 @@ async function loadConversations(q = '') {
 
 function renderTable(rows) {
   const tbody = document.getElementById('conversationsTableBody');
-  selectedIds.clear();
-  updateBulkBar();
   const checkAll = document.getElementById('checkAll');
   if (checkAll) checkAll.checked = false;
+  updateBulkBar();
 
   if (!rows.length) {
     tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay conversaciones aún</p></div></td></tr>`;
@@ -183,18 +181,14 @@ function renderTable(rows) {
 function toggleSelectAll(chk) {
   document.querySelectorAll('.row-check').forEach(cb => {
     cb.checked = chk.checked;
-    const id = parseInt(cb.dataset.id);
-    if (chk.checked) selectedIds.add(id); else selectedIds.delete(id);
-    const row = document.getElementById(`row-${id}`);
+    const row = document.getElementById(`row-${cb.dataset.id}`);
     if (row) row.classList.toggle('row-selected', chk.checked);
   });
   updateBulkBar();
 }
 
 function toggleRow(cb) {
-  const id = parseInt(cb.dataset.id);
-  if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
-  const row = document.getElementById(`row-${id}`);
+  const row = document.getElementById(`row-${cb.dataset.id}`);
   if (row) row.classList.toggle('row-selected', cb.checked);
   const allCbs = document.querySelectorAll('.row-check');
   const checkAll = document.getElementById('checkAll');
@@ -203,9 +197,10 @@ function toggleRow(cb) {
 }
 
 function updateBulkBar() {
+  const checked = document.querySelectorAll('.row-check:checked');
+  const n = checked.length;
   const bar = document.getElementById('bulkBar');
   if (!bar) return;
-  const n = selectedIds.size;
   if (n > 0) {
     bar.classList.add('visible');
     document.getElementById('bulkCount').textContent =
@@ -216,14 +211,13 @@ function updateBulkBar() {
 }
 
 async function deleteSelected() {
-  const ids = [...selectedIds];
+  const checked = [...document.querySelectorAll('.row-check:checked')];
+  const ids = checked.map(cb => parseInt(cb.dataset.id));
   if (!ids.length) return;
   if (!confirm(`¿Eliminar ${ids.length} conversación${ids.length !== 1 ? 'es' : ''} y todos sus mensajes? Esta acción no se puede deshacer.`)) return;
   try {
     const res = await apiFetch('/admin/conversations/bulk', 'DELETE', { ids });
     if (!res.ok) { const d = await res.json(); throw new Error(d.error); }
-    selectedIds.clear();
-    updateBulkBar();
     loadConversations(document.getElementById('searchInput').value);
     showToast(`✅ ${ids.length} conversación${ids.length !== 1 ? 'es' : ''} eliminada${ids.length !== 1 ? 's' : ''}`);
   } catch (err) {
