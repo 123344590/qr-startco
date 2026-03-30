@@ -83,7 +83,7 @@ router.delete('/conversations/bulk', requireAuth, async (req, res) => {
     return res.status(400).json({ error: 'Lista de ids requerida' });
   }
   try {
-    await pool.query('DELETE FROM sessions WHERE id = ANY($1::int[])', [ids]);
+    await pool.query('DELETE FROM sessions WHERE id = ANY($1::text[])', [ids]);
     res.json({ ok: true, deleted: ids.length });
   } catch (err) {
     res.status(500).json({ error: err.message });
