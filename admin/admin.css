@@ -743,6 +743,55 @@ tbody td {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Bulk actions bar ────────────────────────────────────── */
+.bulk-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface-2);
+  border: 1px solid rgba(0,89,226,.4);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  animation: fadeIn .2s ease both;
+}
+.bulk-bar.visible { display: flex; }
+
+.btn-sm {
+  padding: 6px 14px !important;
+  font-size: 12px !important;
+  border-radius: 6px !important;
+  min-height: unset !important;
+}
+
+/* ── Checkbox column ─────────────────────────────────────── */
+.th-check, .td-check {
+  width: 40px;
+  text-align: center;
+  padding: 0 8px !important;
+}
+
+.th-check input[type="checkbox"],
+.td-check input[type="checkbox"],
+.row-check {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--blue);
+  border-radius: 4px;
+}
+
+.conv-row { cursor: default; }
+.conv-row td:not(.td-check) { cursor: pointer; }
+
+.row-selected td {
+  background: rgba(0,89,226,.1) !important;
+}
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar { display: none; }

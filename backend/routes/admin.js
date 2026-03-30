@@ -85,6 +85,20 @@ router.delete('/conversations/:id', requireAuth, async (req, res) => {
   }
 });
 
+// ── DELETE /api/admin/conversations/bulk ───────────────────
+router.delete('/conversations/bulk', requireAuth, async (req, res) => {
+  const { ids } = req.body;
+  if (!Array.isArray(ids) || !ids.length) {
+    return res.status(400).json({ error: 'Lista de ids requerida' });
+  }
+  try {
+    await pool.query('DELETE FROM sessions WHERE id = ANY($1::int[])', [ids]);
+    res.json({ ok: true, deleted: ids.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ── GET /api/admin/settings ──────────────────────────────────
 router.get('/settings', requireAuth, async (_req, res) => {
   try {

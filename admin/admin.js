@@ -11,6 +11,7 @@ const API = window.location.hostname === 'localhost'
 let token           = localStorage.getItem('tasisto_token') || '';
 let currentConvId   = null;
 let searchTimeout   = null;
+let selectedIds     = new Set();
 
 // ────────────────────────────────────────────────────────────
 // INIT
@@ -134,7 +135,7 @@ async function loadStats() {
 // ────────────────────────────────────────────────────────────
 async function loadConversations(q = '') {
   const tbody = document.getElementById('conversationsTableBody');
-  tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando…</p></div></td></tr>`;
+  tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">⏳</div><p>Cargando…</p></div></td></tr>`;
 
   try {
     const res  = await apiFetch(`/admin/conversations?q=${encodeURIComponent(q)}`);
@@ -144,34 +145,90 @@ async function loadConversations(q = '') {
     renderTable(data.rows || []);
     loadStats(); // refrescar stats
   } catch (err) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">❌</div><p>${err.message}</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">❌</div><p>${err.message}</p></div></td></tr>`;
   }
 }
 
 function renderTable(rows) {
   const tbody = document.getElementById('conversationsTableBody');
+  selectedIds.clear();
+  updateBulkBar();
+  const checkAll = document.getElementById('checkAll');
+  if (checkAll) checkAll.checked = false;
 
   if (!rows.length) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay conversaciones aún</p></div></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><div class="empty-state-icon">📭</div><p>No hay conversaciones aún</p></div></td></tr>`;
     return;
   }
 
   tbody.innerHTML = rows.map(row => {
-    const fecha       = formatDate(row.created_at);
-    const badgeClass  = row.status === 'active' ? 'badge-active' : row.status === 'closed' ? 'badge-closed' : 'badge-pending';
-    const badgeLabel  = row.status === 'active' ? '● Activo' : row.status === 'closed' ? 'Cerrado' : '⏳ Pendiente';
-    const preview     = row.last_message ? truncate(row.last_message, 55) : '—';
-    const contacto    = [row.email, row.telefono].filter(Boolean).join(' · ') || '—';
+    const fecha    = formatDate(row.created_at);
+    const preview  = row.last_message ? truncate(row.last_message, 55) : '—';
+    const contacto = [row.email, row.telefono].filter(Boolean).join(' · ') || '—';
 
-    return `<tr onclick="openConversation('${row.id}')">
-      <td class="td-name">${escHtml(row.nombre)}</td>
-      <td class="td-muted">${escHtml(contacto)}</td>
-      <td class="td-preview">${escHtml(preview)}</td>
-      <td><span class="badge ${badgeClass}">${badgeLabel}</span></td>
-      <td class="td-muted">${fecha}</td>
-      <td><span style="color:var(--text-muted);font-size:18px;">›</span></td>
+    return `<tr class="conv-row" id="row-${row.id}">
+      <td class="td-check" onclick="event.stopPropagation()">
+        <input type="checkbox" class="row-check" data-id="${row.id}" onchange="toggleRow(this)">
+      </td>
+      <td class="td-name" onclick="openConversation('${row.id}')">${escHtml(row.nombre)}</td>
+      <td class="td-muted" onclick="openConversation('${row.id}')">${escHtml(contacto)}</td>
+      <td class="td-preview" onclick="openConversation('${row.id}')">${escHtml(preview)}</td>
+      <td onclick="openConversation('${row.id}')"><span class="badge badge-active">● Activo</span></td>
+      <td class="td-muted" onclick="openConversation('${row.id}')">${fecha}</td>
+      <td onclick="openConversation('${row.id}')"><span style="color:var(--text-muted);font-size:18px;">›</span></td>
     </tr>`;
   }).join('');
+}
+
+function toggleSelectAll(chk) {
+  document.querySelectorAll('.row-check').forEach(cb => {
+    cb.checked = chk.checked;
+    const id = parseInt(cb.dataset.id);
+    if (chk.checked) selectedIds.add(id); else selectedIds.delete(id);
+    const row = document.getElementById(`row-${id}`);
+    if (row) row.classList.toggle('row-selected', chk.checked);
+  });
+  updateBulkBar();
+}
+
+function toggleRow(cb) {
+  const id = parseInt(cb.dataset.id);
+  if (cb.checked) selectedIds.add(id); else selectedIds.delete(id);
+  const row = document.getElementById(`row-${id}`);
+  if (row) row.classList.toggle('row-selected', cb.checked);
+  const allCbs = document.querySelectorAll('.row-check');
+  const checkAll = document.getElementById('checkAll');
+  if (checkAll) checkAll.checked = allCbs.length > 0 && [...allCbs].every(c => c.checked);
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  if (!bar) return;
+  const n = selectedIds.size;
+  if (n > 0) {
+    bar.classList.add('visible');
+    document.getElementById('bulkCount').textContent =
+      `${n} seleccionada${n !== 1 ? 's' : ''}`;
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+async function deleteSelected() {
+  const ids = [...selectedIds];
+  if (!ids.length) return;
+  if (!confirm(`¿Eliminar ${ids.length} conversación${ids.length !== 1 ? 'es' : ''} y todos sus mensajes? Esta acción no se puede deshacer.`)) return;
+  try {
+    const res = await apiFetch('/admin/conversations/bulk', 'DELETE', { ids });
+    if (!res.ok) { const d = await res.json(); throw new Error(d.error); }
+    selectedIds.clear();
+    updateBulkBar();
+    loadConversations(document.getElementById('searchInput').value);
+    showToast(`✅ ${ids.length} conversación${ids.length !== 1 ? 'es' : ''} eliminada${ids.length !== 1 ? 's' : ''}`);
+  } catch (err) {
+    showToast(err.message, true);
+  }
 }
 
 // ────────────────────────────────────────────────────────────
@@ -205,10 +262,8 @@ function renderModal(session, messages) {
 
   // Badge estado
   const st = document.getElementById('modalStatus');
-  const badgeClass = session.status === 'active' ? 'badge-active' : session.status === 'closed' ? 'badge-closed' : 'badge-pending';
-  const badgeLabel = session.status === 'active' ? '● Activo' : session.status === 'closed' ? 'Cerrado' : '⏳ Pendiente';
-  st.className = `badge ${badgeClass}`;
-  st.textContent = badgeLabel;
+  st.className = 'badge badge-active';
+  st.textContent = '● Activo';
 
   // Body
   const body = document.getElementById('modalBody');

@@ -110,10 +110,17 @@
             <input type="text" id="searchInput" placeholder="Buscar por nombre, email…" />
           </div>
         </div>
+        <!-- Barra de selección masiva -->
+        <div class="bulk-bar" id="bulkBar">
+          <span id="bulkCount">0 seleccionadas</span>
+          <button class="btn-danger btn-sm" onclick="deleteSelected()">🗑 Eliminar seleccionadas</button>
+        </div>
+
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
+                <th class="th-check"><input type="checkbox" id="checkAll" onchange="toggleSelectAll(this)" title="Seleccionar todas"></th>
                 <th>Nombre</th>
                 <th>Contacto</th>
                 <th>Último mensaje</th>
@@ -124,7 +131,7 @@
             </thead>
             <tbody id="conversationsTableBody">
               <tr>
-                <td colspan="6">
+                <td colspan="7">
                   <div class="empty-state">
                     <div class="empty-state-icon">⏳</div>
                     <p>Cargando…</p>
