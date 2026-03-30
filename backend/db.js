@@ -57,6 +57,14 @@ async function initDb() {
       );
     `);
 
+    // ── Migraciones: agregar columnas si no existen ─────────
+    await client.query(`
+      ALTER TABLE sessions
+        ADD COLUMN IF NOT EXISTS chatwoot_conversation_id INT,
+        ADD COLUMN IF NOT EXISTS chatwoot_source_id       VARCHAR(200),
+        ADD COLUMN IF NOT EXISTS updated_at               TIMESTAMPTZ DEFAULT NOW();
+    `);
+
     // ── Configuraciones por defecto ──────────────────────────
     await client.query(`
       INSERT INTO settings (key, value)
