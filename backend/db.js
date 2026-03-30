@@ -6,8 +6,11 @@ const { Pool }  = require('pg');
 const bcrypt    = require('bcrypt');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL ||
-    'postgres://tasisto_user:TasiSto2026!@localhost:5433/tasisto',
+  host:     process.env.DB_HOST     || 'localhost',
+  port:     parseInt(process.env.DB_PORT || '5432'),
+  user:     process.env.DB_USER     || 'tasisto_user',
+  password: process.env.DB_PASSWORD || 'TasiSto2026!',
+  database: process.env.DB_NAME     || 'tasisto',
   ssl: process.env.NODE_ENV === 'production'
     ? { rejectUnauthorized: false }
     : false,
