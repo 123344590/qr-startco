@@ -18,12 +18,14 @@ const btnRetry     = document.getElementById('btnRetry');
 const chatMessages = document.getElementById('chatMessages');
 
 // ── Estado de sesión y polling ─────────────────────────────────
-let currentSessionId = null;
-let pollingTimer     = null;
-let pollingCount     = 0;
-let lastMessageId    = 0;     // último id recibido (evita duplicados)
-const POLL_INTERVAL  = 3000; // 3 segundos entre consultas
-const POLL_MAX       = 60;   // máx ~3 minutos sin respuesta
+let currentSessionId    = null;
+let pollingTimer        = null;
+let pollingCount        = 0;
+let lastMessageId       = 0;    // último id recibido (evita duplicados)
+let hasReceivedMessage  = false; // si ya llegó al menos un mensaje del agente
+const POLL_INTERVAL     = 3000; // 3 segundos entre consultas
+const POLL_MAX          = 60;   // ~3 min de espera inicial (sin ningún mensaje)
+const POLL_MAX_AFTER    = 400;  // ~20 min después del primer mensaje
 
 function generateSessionId() {
   return Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 8);
@@ -208,9 +210,14 @@ function stopPolling() {
 
 // ── Polling: consulta el backend cada POLL_INTERVAL ms ────────────
 async function pollMessages(sessionId) {
-  if (pollingCount >= POLL_MAX) {
+  const efectivoMax = hasReceivedMessage ? POLL_MAX_AFTER : POLL_MAX;
+
+  if (pollingCount >= efectivoMax) {
     removeTyping();
-    addChatBubble('Un asesor te contactará pronto por los datos que dejaste. 👋', 'agent');
+    // Solo mostrar aviso si NUNCA llegó ningún mensaje del agente
+    if (!hasReceivedMessage) {
+      addChatBubble('Un asesor te contactará pronto por los datos que dejaste. 👋', 'agent');
+    }
     stopPolling();
     return;
   }
@@ -224,11 +231,12 @@ async function pollMessages(sessionId) {
       const { messages } = await res.json();
       if (messages && messages.length > 0) {
         removeTyping();
+        hasReceivedMessage = true;
         for (const msg of messages) {
           addChatBubble(msg.content, 'agent');
           lastMessageId = msg.id;
         }
-        // Seguir esperando mensajes de agentes reales
+        // Seguir esperando más mensajes del agente
         addChatBubble('', 'typing');
         pollingCount = 0; // reset: puede llegar más mensajes
       }
@@ -276,8 +284,9 @@ form.addEventListener('submit', async e => {
 
   const datos     = recogerRespuestas();
   const sessionId = generateSessionId();
-  currentSessionId = sessionId;
-  lastMessageId    = 0;
+  currentSessionId    = sessionId;
+  lastMessageId       = 0;
+  hasReceivedMessage  = false;
 
   btnSubmit.disabled = true;
   btnSubmit.classList.add('loading');
