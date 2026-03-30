@@ -114,6 +114,13 @@ router.post('/response', async (req, res) => {
 router.post('/agent-message', async (req, res) => {
   const { sessionId, conversationId, mensaje, senderName } = req.body;
 
+  console.log('[agent-message] recibido →', JSON.stringify({
+    sessionId: sessionId || '(vacío)',
+    conversationId: conversationId || '(vacío)',
+    mensaje: mensaje ? mensaje.substring(0, 60) : '(vacío)',
+    senderName: senderName || '(vacío)',
+  }));
+
   if (!mensaje) {
     return res.status(400).json({ error: 'mensaje es requerido' });
   }
@@ -132,6 +139,7 @@ router.post('/agent-message', async (req, res) => {
 
     if (!resolvedSessionId) {
       // Sesión desconocida → ignorar silenciosamente (mensaje de bot u otro)
+      console.log('[agent-message] skipped → no se encontró sesión. conversationId buscado:', convIdInt);
       return res.json({ ok: true, skipped: true });
     }
 
