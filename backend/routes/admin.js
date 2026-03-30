@@ -75,17 +75,8 @@ router.get('/conversations/:id', requireAuth, async (req, res) => {
   }
 });
 
-// ── DELETE /api/admin/conversations/:id ─────────────────────
-router.delete('/conversations/:id', requireAuth, async (req, res) => {
-  try {
-    await pool.query('DELETE FROM sessions WHERE id = $1', [req.params.id]);
-    res.json({ ok: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ── DELETE /api/admin/conversations/bulk ───────────────────
+// ── DELETE /api/admin/conversations/bulk ─────────────────────
+// IMPORTANTE: debe ir ANTES de /:id para que Express no lo capture como parámetro
 router.delete('/conversations/bulk', requireAuth, async (req, res) => {
   const { ids } = req.body;
   if (!Array.isArray(ids) || !ids.length) {
@@ -94,6 +85,16 @@ router.delete('/conversations/bulk', requireAuth, async (req, res) => {
   try {
     await pool.query('DELETE FROM sessions WHERE id = ANY($1::int[])', [ids]);
     res.json({ ok: true, deleted: ids.length });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ── DELETE /api/admin/conversations/:id ──────────────────────
+router.delete('/conversations/:id', requireAuth, async (req, res) => {
+  try {
+    await pool.query('DELETE FROM sessions WHERE id = $1', [req.params.id]);
+    res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
