@@ -191,15 +191,8 @@ function addChatBubble(text, type) {
   } else {
     const bbl = document.createElement('div');
     bbl.classList.add('chat-bubble', `bubble-${type}`);
-
-    if (Array.isArray(text)) {
-      bbl.innerHTML = text
-        .map(r => `<span class="bubble-row"><span class="bubble-icon">${r.icon}</span><span class="bubble-txt">${escapeHtml(r.text)}</span></span>`)
-        .join('');
-    } else {
-      // Preserva saltos de línea y convierte URLs en links
-      bbl.innerHTML = linkify(String(text ?? '')).replace(/\n/g, '<br>');
-    }
+    // Siempre texto plano: preserva saltos de línea y convierte URLs en links
+    bbl.innerHTML = linkify(String(text ?? '')).replace(/\n/g, '<br>');
     wrap.appendChild(bbl);
   }
 

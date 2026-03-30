@@ -68,15 +68,16 @@ router.post('/submit', submitLimiter, async (req, res) => {
 // ────────────────────────────────────────────────────────────
 // POST /api/webhook/response
 // n8n llama aquí después de crear la conversación en Chatwoot.
-// Solo vincula el conversationId con la sesión (sin guardar mensaje).
-// Body esperado: { sessionId, conversationId?, sourceId? }
+// Vincula el conversationId con la sesión y guarda el mensaje de bienvenida.
+// Body esperado: { sessionId, mensaje, conversationId?, sourceId? }
 // ────────────────────────────────────────────────────────────
 router.post('/response', async (req, res) => {
-  const { sessionId, conversationId, sourceId } = req.body;
+  const { sessionId, mensaje, conversationId, sourceId } = req.body;
 
   console.log('[response] recibido →', JSON.stringify({
     sessionId: sessionId || '(vacío)',
     conversationId: conversationId || '(vacío)',
+    mensaje: mensaje ? mensaje.substring(0, 60) : '(vacío)',
   }));
 
   if (!sessionId) {
@@ -94,6 +95,14 @@ router.post('/response', async (req, res) => {
             updated_at               = NOW()
         WHERE id = $3
       `, [conversationId, sourceId || null, sessionId]);
+    }
+
+    // Guardar el mensaje de bienvenida si viene
+    if (mensaje) {
+      await pool.query(`
+        INSERT INTO messages (session_id, content, sender_type, sender_name)
+        VALUES ($1, $2, 'agent', 'T-ASISTO')
+      `, [sessionId, mensaje]);
     }
 
     res.json({ ok: true });
