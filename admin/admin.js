@@ -212,7 +212,7 @@ function updateBulkBar() {
 
 async function deleteSelected() {
   const checked = [...document.querySelectorAll('.row-check:checked')];
-  const ids = checked.map(cb => parseInt(cb.dataset.id));
+  const ids = checked.map(cb => cb.dataset.id);
   if (!ids.length) return;
   if (!confirm(`¿Eliminar ${ids.length} conversación${ids.length !== 1 ? 'es' : ''} y todos sus mensajes? Esta acción no se puede deshacer.`)) return;
   try {
