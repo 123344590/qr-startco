@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: tasisto_db
+    environment:
+      POSTGRES_DB:       tasisto
+      POSTGRES_USER:     tasisto_user
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-TasiSto2026!}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tasisto_user -d tasisto"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .          # raíz del repo (para acceder a admin/ y formulario/)
+      dockerfile: backend/Dockerfile
+    container_name: tasisto_backend
+    environment:
+      DATABASE_URL:  postgres://tasisto_user:${DB_PASSWORD:-TasiSto2026!}@db:5432/tasisto
+      PORT:          3001
+      JWT_SECRET:    ${JWT_SECRET:-cambia_esto_en_produccion}
+      ADMIN_USER:    ${ADMIN_USER:-admin}
+      ADMIN_PASS:    ${ADMIN_PASS:-Admin2026!}
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

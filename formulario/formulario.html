@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>T-ASISTO · Contáctanos</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="formulario.css">
+</head>
+<body>
+
+  <!-- Fondo decorativo -->
+  <div class="bg-layer">
+    <span class="shape s1"></span>
+    <span class="shape s2"></span>
+    <span class="shape s3"></span>
+    <span class="shape s4"></span>
+  </div>
+
+  <!-- Wrapper principal -->
+  <main class="page-wrapper">
+
+    <!-- Columna izquierda · Branding -->
+    <aside class="brand-col">
+      <div class="brand-inner">
+        <div class="brand-logo-wrap">
+          <img src="img/tasisto-logo.png" alt="T-ASISTO" class="brand-logo">
+        </div>
+        <h1 class="brand-title">T-ASISTO</h1>
+        <p class="brand-sub">Conectando con tus sueños.</p>
+
+        <div class="brand-features">
+          <div class="feature-item">
+            <span class="feat-icon">💬</span>
+            <div>
+              <strong>Soporte multicanal</strong>
+              <span>WhatsApp, Instagram, Facebook y más</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feat-icon">⚡</span>
+            <div>
+              <strong>Respuesta inmediata</strong>
+              <span>Nuestro equipo te atiende al instante</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feat-icon">🤖</span>
+            <div>
+              <strong>IA integrada</strong>
+              <span>Asistencia inteligente 24/7</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-badge">✦ Plataforma Inteligente</div>
+      </div>
+    </aside>
+
+    <!-- Columna derecha · Formulario -->
+    <section class="form-col">
+      <div class="form-card">
+
+        <!-- Cabecera del formulario -->
+        <div class="form-header">
+          <span class="form-label">Diagnóstico Gratuito</span>
+          <h2 class="form-title">¿Cómo gestionas tus leads hoy?</h2>
+          <p class="form-desc">Responde unas preguntas rápidas y te mostramos cómo mejorar tu proceso de ventas con IA.</p>
+        </div>
+
+        <!-- ── Formulario ── -->
+        <form id="contactForm" novalidate autocomplete="off">
+
+          <!-- ─── Datos de contacto ─── -->
+          <p class="form-section-title">Datos de contacto</p>
+
+          <div class="field-wrap full-width">
+            <label for="f_nombre">Nombre *</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 17c0-3.314 3.134-6 7-6s7 2.686 7 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </span>
+              <input type="text" id="f_nombre" name="nombre" placeholder="Tu nombre o el de tu empresa" required maxlength="100">
+            </div>
+            <span class="field-error" id="err_nombre">Por favor ingresa tu nombre</span>
+          </div>
+
+          <div class="form-row">
+            <div class="field-wrap">
+              <label for="f_telefono">Teléfono</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg viewBox="0 0 20 20" fill="none"><path d="M5.5 3h3l1.5 4-2 1.5a9 9 0 0 0 3.5 3.5L13 10l4 1.5V15a1.5 1.5 0 0 1-1.5 1.5C7.2 16.5 3.5 12.8 3.5 8A1.5 1.5 0 0 1 5 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </span>
+                <input type="tel" id="f_telefono" name="telefono" placeholder="+52 000 000 0000" maxlength="20">
+              </div>
+            </div>
+
+            <div class="field-wrap">
+              <label for="f_email">Correo electrónico</label>
+              <div class="input-wrap">
+                <span class="input-icon">
+                  <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 7l8 5 8-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                </span>
+                <input type="email" id="f_email" name="email" placeholder="tu@empresa.com" maxlength="150">
+              </div>
+              <span class="field-error" id="err_email">Ingresa un correo válido</span>
+            </div>
+          </div>
+
+          <!-- ─── Preguntas de diagnóstico ─── -->
+          <p class="form-section-title">Cuéntanos un poco más</p>
+
+          <!-- Q1: Canales (checkboxes) -->
+          <div class="diag-question" id="dq1">
+            <p class="diag-q-label">1. ¿Por cuáles canales reciben consultas hoy?</p>
+            <div class="chip-group" id="q1_chips">
+              <label class="chip"><input type="checkbox" name="q1" value="WhatsApp"> <span>💬 WhatsApp</span></label>
+              <label class="chip"><input type="checkbox" name="q1" value="Llamadas"> <span>📞 Llamadas</span></label>
+              <label class="chip"><input type="checkbox" name="q1" value="Correo"> <span>✉️ Correo</span></label>
+              <label class="chip"><input type="checkbox" name="q1" value="Instagram"> <span>📸 Instagram</span></label>
+              <label class="chip"><input type="checkbox" name="q1" value="Facebook"> <span>👥 Facebook</span></label>
+              <label class="chip"><input type="checkbox" name="q1" value="TikTok"> <span>🎵 TikTok</span></label>
+              <label class="chip"><input type="checkbox" name="q1" value="Web/Chat"> <span>🌐 Web / Chat</span></label>
+              <label class="chip chip-otro" id="chip_otro_q1">
+                <input type="checkbox" name="q1" value="__otro__" id="q1_otro_chk"> <span>➕ Otro</span>
+              </label>
+            </div>
+            <input type="text" class="otro-input" id="q1_otro_txt" placeholder="¿Cuál canal?" maxlength="80" style="display:none">
+          </div>
+
+          <!-- Q2: Centralización (radio) -->
+          <div class="diag-question" id="dq2">
+            <p class="diag-q-label">2. ¿Centralizan esos mensajes o cada asesor los maneja por separado?</p>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="q2" value="Centralizamos los mensajes en una sola plataforma">
+                <span class="radio-icon">🗂️</span>
+                <span class="radio-text">Centralizamos los mensajes</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q2" value="Cada asesor maneja sus mensajes por separado">
+                <span class="radio-icon">👤</span>
+                <span class="radio-text">Cada asesor lo maneja por separado</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q2" value="No tenemos un proceso definido">
+                <span class="radio-icon">🤷</span>
+                <span class="radio-text">No tenemos proceso definido</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q3: Seguimiento (radio) -->
+          <div class="diag-question" id="dq3">
+            <p class="diag-q-label">3. ¿Cómo hacen el seguimiento a un prospecto?</p>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="q3" value="Con un CRM o herramienta especializada">
+                <span class="radio-icon">💼</span>
+                <span class="radio-text">CRM o herramienta especializada</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q3" value="Con Excel o Google Sheets">
+                <span class="radio-icon">📊</span>
+                <span class="radio-text">Excel / Google Sheets</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q3" value="Con agenda o notas físicas">
+                <span class="radio-icon">📓</span>
+                <span class="radio-text">Agenda o notas físicas</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q3" value="De memoria, sin registro formal">
+                <span class="radio-icon">🧠</span>
+                <span class="radio-text">De memoria, sin registro</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q4: Visibilidad pipeline (radio) -->
+          <div class="diag-question" id="dq4">
+            <p class="diag-q-label">4. ¿Saben cuántos prospectos activos tienen y en qué etapa está cada uno?</p>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="q4" value="Sí, tenemos visibilidad total del pipeline">
+                <span class="radio-icon">✅</span>
+                <span class="radio-text">Sí, tenemos visibilidad total</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q4" value="Más o menos, pero nos falta claridad">
+                <span class="radio-icon">⚠️</span>
+                <span class="radio-text">Más o menos, nos falta claridad</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q4" value="No tenemos visibilidad del pipeline">
+                <span class="radio-icon">❌</span>
+                <span class="radio-text">No, no tenemos esa visibilidad</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q5: CRM previo (radio) -->
+          <div class="diag-question" id="dq5">
+            <p class="diag-q-label">5. ¿Han usado antes algún CRM o sistema de gestión de clientes?</p>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="q5" value="Sí, actualmente usamos uno">
+                <span class="radio-icon">🟢</span>
+                <span class="radio-text">Sí, actualmente usamos uno</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q5" value="Lo usamos antes pero lo abandonamos">
+                <span class="radio-icon">🔄</span>
+                <span class="radio-text">Lo usamos antes pero lo dejamos</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q5" value="Nunca hemos usado un CRM">
+                <span class="radio-icon">🆕</span>
+                <span class="radio-text">Nunca hemos usado un CRM</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q6: Apertura digital (radio) -->
+          <div class="diag-question" id="dq6">
+            <p class="diag-q-label">6. ¿Su equipo está abierto a adoptar herramientas digitales?</p>
+            <div class="radio-group">
+              <label class="radio-card">
+                <input type="radio" name="q6" value="Sí, estamos muy abiertos al cambio">
+                <span class="radio-icon">🚀</span>
+                <span class="radio-text">Sí, muy abiertos al cambio</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q6" value="Algunos sí, otros necesitan convencerse">
+                <span class="radio-icon">🤝</span>
+                <span class="radio-text">Algunos sí, otros hay que convencer</span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="q6" value="Hay resistencia al cambio en el equipo">
+                <span class="radio-icon">😬</span>
+                <span class="radio-text">Hay resistencia al cambio</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Botón de envío -->
+          <button type="submit" class="btn-submit" id="btnSubmit">
+            <span class="btn-text">
+              <svg class="btn-icon" viewBox="0 0 20 20" fill="none"><path d="M3 10l14-7-7 14-2-5-5-2z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              Enviar diagnóstico
+            </span>
+            <span class="btn-loading" aria-hidden="true">
+              <span class="spinner"></span>
+              Enviando...
+            </span>
+          </button>
+
+        </form>
+
+        <!-- ── Chat panel ── -->
+        <div class="state-panel chat-panel" id="successPanel" aria-live="polite">
+
+          <!-- Cabecera del chat -->
+          <div class="chat-header">
+            <div class="chat-avatar">
+              <img src="img/tasisto-logo.png" alt="T-ASISTO">
+            </div>
+            <div class="chat-header-info">
+              <strong>T-ASISTO</strong>
+              <span class="chat-status">
+                <span class="chat-dot"></span>En línea
+              </span>
+            </div>
+            <div class="chat-ticket-badge" id="ticketInfo"></div>
+          </div>
+
+          <!-- Burbuja de mensajes -->
+          <div class="chat-messages" id="chatMessages"></div>
+        </div>
+
+        <!-- ── Estado: Error ── -->
+        <div class="state-panel error-panel" id="errorPanel" aria-live="assertive">
+          <div class="state-icon error-icon">
+            <svg viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2"/>
+              <path d="M16 16l16 16M32 16L16 32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Error al enviar</h3>
+          <p id="errorMsg">Ocurrió un problema al enviar tu mensaje. Por favor intenta de nuevo.</p>
+          <button class="btn-retry" id="btnRetry">Intentar de nuevo</button>
+        </div>
+
+      </div><!-- /form-card -->
+    </section>
+
+  </main>
+
+  <script src="formulario.js"></script>
+</body>
+</html>

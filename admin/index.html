@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T-ASISTO · Panel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     LOGIN
+══════════════════════════════════════════════════════════ -->
+<div id="loginView">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="../formulario/img/logo.png" alt="T-ASISTO" onerror="this.style.display='none'" />
+      <span>T-ASISTO</span>
+    </div>
+    <h1>Panel de Administración</h1>
+    <p>Ingresa tus credenciales para continuar</p>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label for="loginUser">Usuario</label>
+        <input id="loginUser" type="text" placeholder="admin" autocomplete="username" required />
+      </div>
+      <div class="field">
+        <label for="loginPass">Contraseña</label>
+        <input id="loginPass" type="password" placeholder="••••••••" autocomplete="current-password" required />
+      </div>
+      <div class="error-pill" id="loginError"></div>
+      <button class="btn-primary" type="submit" id="btnLogin">
+        <span id="btnLoginText">Iniciar sesión</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════════════════════ -->
+<div id="dashboardView">
+
+  <!-- ── Sidebar ─────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <img src="../formulario/img/logo.png" alt="T-ASISTO" onerror="this.style.display='none'" />
+      <span>T-ASISTO</span>
+    </div>
+
+    <div class="sidebar-label">Menú</div>
+
+    <button class="nav-item active" id="navConversaciones" onclick="showSection('conversations')">
+      <span class="nav-icon">💬</span> Conversaciones
+    </button>
+    <button class="nav-item" id="navConfiguracion" onclick="showSection('settings')">
+      <span class="nav-icon">⚙️</span> Configuración
+    </button>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-user">
+      <div class="sidebar-user-avatar" id="sidebarAvatar">A</div>
+      <span class="sidebar-user-name" id="sidebarUsername">admin</span>
+      <button class="sidebar-logout" onclick="logout()" title="Cerrar sesión">✕</button>
+    </div>
+  </aside>
+
+  <!-- ── Main ────────────────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- SECCIÓN: Conversaciones -->
+    <section id="sectionConversations">
+      <div class="page-header">
+        <div>
+          <h2>Conversaciones</h2>
+          <p>Leads capturados desde el formulario de diagnóstico</p>
+        </div>
+        <button class="btn-secondary" onclick="loadConversations()">
+          🔄 Actualizar
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-label">Total leads</div>
+          <div class="stat-card-value blue" id="statTotal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Hoy</div>
+          <div class="stat-card-value green" id="statHoy">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-label">Pendientes</div>
+          <div class="stat-card-value yellow" id="statPending">—</div>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <div class="card">
+        <div class="card-header">
+          <h3>Todos los leads</h3>
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Buscar por nombre, email…" />
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                <th>Último mensaje</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="conversationsTableBody">
+              <tr>
+                <td colspan="6">
+                  <div class="empty-state">
+                    <div class="empty-state-icon">⏳</div>
+                    <p>Cargando…</p>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: Configuración -->
+    <section id="sectionSettings" style="display:none">
+      <div class="page-header">
+        <div>
+          <h2>Configuración</h2>
+          <p>Ajustes del sistema y conexiones con n8n</p>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 24px; max-width: 640px;">
+
+        <!-- Webhook n8n -->
+        <div class="settings-section">
+          <h3>🔗 Webhook n8n (envío de formulario)</h3>
+          <p>URL del webhook de n8n al que se enviarán los datos del formulario cuando un usuario lo complete.</p>
+          <div class="settings-row">
+            <div class="field">
+              <label>URL del webhook</label>
+              <input id="settingWebhook" type="url" placeholder="https://n8n.tudominio.com/webhook/…" />
+            </div>
+            <button class="btn-primary" style="width:auto; margin-top:0;" onclick="saveSettings()">
+              💾 Guardar
+            </button>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Endpoint que n8n debe llamar -->
+        <div class="settings-section">
+          <h3>📡 Endpoints que n8n debe llamar</h3>
+          <p>Copia estas URLs y agrégalas como nodos <strong>HTTP Request</strong> en tu workflow de n8n.</p>
+
+          <p style="margin-bottom:8px; font-weight:600; font-size:13px; color:#93c5fd;">
+            1. Después de crear la conversación en Chatwoot (primer mensaje automático):
+          </p>
+          <div class="webhook-info-box" id="endpointResponse">
+            <span class="webhook-url-text" id="endpointResponseUrl">—</span>
+            <button class="copy-btn" onclick="copyEndpoint('endpointResponseUrl')">Copiar</button>
+          </div>
+
+          <p style="margin: 16px 0 8px; font-weight:600; font-size:13px; color:#93c5fd;">
+            2. Cuando un agente envía un mensaje desde Chatwoot (mensajes reales):
+          </p>
+          <div class="webhook-info-box" id="endpointAgent">
+            <span class="webhook-url-text" id="endpointAgentUrl">—</span>
+            <button class="copy-btn" onclick="copyEndpoint('endpointAgentUrl')">Copiar</button>
+          </div>
+
+          <div style="margin-top:16px; font-size:13px; color:var(--text-muted); line-height:1.6;">
+            <strong style="color:var(--text);">Body requerido para ambos endpoints:</strong><br/>
+            <code style="color:#93c5fd;">{ "sessionId": "…", "mensaje": "…", "senderName": "…" }</code>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Cambiar contraseña -->
+        <div class="settings-section">
+          <h3>🔑 Cambiar contraseña</h3>
+          <p>Cambia la contraseña del administrador.</p>
+          <div class="field">
+            <label>Contraseña actual</label>
+            <input id="currentPass" type="password" placeholder="••••••••" />
+          </div>
+          <div class="field">
+            <label>Nueva contraseña</label>
+            <input id="newPass" type="password" placeholder="Mínimo 6 caracteres" />
+          </div>
+          <div class="error-pill" id="passError"></div>
+          <button class="btn-primary" style="width:auto; margin-top:8px;" onclick="changePassword()">
+            Actualizar contraseña
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     MODAL Conversación
+════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-avatar" id="modalAvatar">?</div>
+      <div class="modal-info">
+        <h3 id="modalName">—</h3>
+        <p id="modalContact">—</p>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-footer">
+      <span id="modalStatus" class="badge"></span>
+      <button class="btn-danger" id="modalDeleteBtn" onclick="deleteConversation()">🗑 Eliminar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script src="admin.js"></script>
+</body>
+</html>
