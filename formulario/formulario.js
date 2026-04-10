@@ -16,6 +16,7 @@ const ticketInfo   = document.getElementById('ticketInfo');
 const errorMsg     = document.getElementById('errorMsg');
 const btnRetry     = document.getElementById('btnRetry');
 const chatMessages = document.getElementById('chatMessages');
+const formCard     = document.querySelector('.form-card');
 const formAlert    = document.getElementById('formAlert');
 const dataModal    = document.getElementById('dataModal');
 const openDataBtn  = document.getElementById('openDataModal');
@@ -459,11 +460,20 @@ form.addEventListener('submit', async e => {
 // ── Helpers de paneles ──────────────────────────────────────
 function showPanel(panel) {
   panel.classList.add('visible');
+  if (panel === successPanel) {
+    document.body.classList.add('chat-open');
+    formCard?.classList.add('chat-mode');
+    return;
+  }
   panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function hidePanel(panel) {
   panel.classList.remove('visible');
+  if (panel === successPanel) {
+    document.body.classList.remove('chat-open');
+    formCard?.classList.remove('chat-mode');
+  }
 }
 
 // ── Botón: Intentar de nuevo ─────────────────────────────────

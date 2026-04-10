@@ -1014,7 +1014,7 @@ select {
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
-  background: linear-gradient(135deg, #0041a8 0%, #0059E2 100%);
+  background: linear-gradient(135deg, #15605A 0%, #40B5B4 100%);
   flex-shrink: 0;
 }
 
@@ -1265,6 +1265,42 @@ select {
   padding: 8px 20px;
 }
 
+/* ── Modo compacto al enviar formulario ── */
+body.chat-open {
+  overflow: hidden;
+}
+
+body.chat-open .page-wrapper {
+  max-height: calc(100vh - 80px);
+}
+
+body.chat-open .brand-col {
+  display: none;
+}
+
+body.chat-open .form-col {
+  width: 100%;
+}
+
+.form-card.chat-mode {
+  padding: 0;
+  height: 100%;
+  min-height: 0;
+}
+
+.form-card.chat-mode > .form-header,
+.form-card.chat-mode > #contactForm {
+  display: none;
+}
+
+.form-card.chat-mode .chat-panel.state-panel {
+  position: relative;
+  inset: auto;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
 /* ── Modal tratamiento de datos ── */
 .data-modal {
   position: fixed;
@@ -1375,6 +1411,14 @@ select {
     max-width: 420px;
     margin: 0 auto;
     text-align: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .feature-item div {
+    align-items: center;
+    text-align: center;
   }
 
   .feature-item strong { font-size: 12.5px; }
@@ -1388,6 +1432,18 @@ select {
     flex-direction: column;
     gap: 0;
   }
+
+  body.chat-open {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  body.chat-open .page-wrapper {
+    max-height: 100dvh;
+    min-height: 100dvh;
+    border-radius: 0;
+    margin: 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1398,9 +1454,7 @@ select {
   .brand-features { gap: 8px; }
   .feature-item {
     gap: 8px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    max-width: 100%;
   }
   .feat-icon { font-size: 18px; }
 
