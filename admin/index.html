@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>T-ASISTO · Panel Admin</title>
+  <title>JABVOX · Panel Admin</title>
+  <link rel="icon" type="image/x-icon" href="/formulario/img/jabvox.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="admin.css" />
 </head>
 <body>
@@ -17,8 +18,8 @@
 <div id="loginView">
   <div class="login-card">
     <div class="login-logo">
-      <img src="/formulario/img/tasisto-logo.png" alt="T-ASISTO" onerror="this.style.display='none'" />
-      <span>T-ASISTO</span>
+      <img src="/formulario/img/jabvox.png" alt="JABVOX" onerror="this.style.display='none'" />
+      <span>JABVOX</span>
     </div>
     <h1>Panel de Administración</h1>
     <p>Ingresa tus credenciales para continuar</p>
@@ -48,8 +49,8 @@
   <!-- ── Sidebar ─────────────────────────────────────────── -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <img src="/formulario/img/tasisto-logo.png" alt="T-ASISTO" onerror="this.style.display='none'" />
-      <span>T-ASISTO</span>
+      <img src="/formulario/img/jabvox.png" alt="JABVOX" onerror="this.style.display='none'" />
+      <span>JABVOX</span>
     </div>
 
     <div class="sidebar-label">Menú</div>
@@ -177,7 +178,7 @@
           <h3>📡 Endpoints que n8n debe llamar</h3>
           <p>Copia estas URLs y agrégalas como nodos <strong>HTTP Request</strong> en tu workflow de n8n.</p>
 
-          <p style="margin-bottom:8px; font-weight:600; font-size:13px; color:#93c5fd;">
+          <p style="margin-bottom:8px; font-weight:600; font-size:13px; color:#59B995;">
             1. Después de crear la conversación en Chatwoot (primer mensaje automático):
           </p>
           <div class="webhook-info-box" id="endpointResponse">
@@ -185,7 +186,7 @@
             <button class="copy-btn" onclick="copyEndpoint('endpointResponseUrl')">Copiar</button>
           </div>
 
-          <p style="margin: 16px 0 8px; font-weight:600; font-size:13px; color:#93c5fd;">
+          <p style="margin: 16px 0 8px; font-weight:600; font-size:13px; color:#59B995;">
             2. Cuando un agente envía un mensaje desde Chatwoot (mensajes reales):
           </p>
           <div class="webhook-info-box" id="endpointAgent">
@@ -195,7 +196,7 @@
 
           <div style="margin-top:16px; font-size:13px; color:var(--text-muted); line-height:1.6;">
             <strong style="color:var(--text);">Body requerido para ambos endpoints:</strong><br/>
-            <code style="color:#93c5fd;">{ "sessionId": "…", "mensaje": "…", "senderName": "…" }</code>
+            <code style="color:#40B5B4;">{ "sessionId": "…", "mensaje": "…", "senderName": "…" }</code>
           </div>
         </div>
 

@@ -101,7 +101,7 @@ router.post('/response', async (req, res) => {
     if (mensaje) {
       await pool.query(`
         INSERT INTO messages (session_id, content, sender_type, sender_name)
-        VALUES ($1, $2, 'agent', 'T-ASISTO')
+        VALUES ($1, $2, 'agent', 'JABVOX')
       `, [sessionId, mensaje]);
     }
 

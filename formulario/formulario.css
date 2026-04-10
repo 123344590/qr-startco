@@ -3,25 +3,26 @@
    Estilos inspirados en el carrusel original
    ========================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap');
 
 /* ── Variables (mismo sistema del carrusel) ── */
 :root {
-  --blue:        #0059E2;
-  --blue-mid:    #0047B3;
-  --blue-light:  #abd8f7;
-  --blue-glow:   rgba(0,89,226,0.22);
-  --purple:      #6366F1;
-  --green:       #0891B2;
-  --red:         #EF4444;
-  --amber:       #F59E0B;
-  --dark:        #04111f;
-  --dark-2:      #071e38;
-  --text:        #061a33;
-  --muted:       #2d5070;
-  --bg-start:    #e6f4fc;
-  --bg-end:      #abd8f7;
-  --white:       #ffffff;
+  --blue:        #40B5B4;
+  --blue-mid:    #15605A;
+  --blue-light:  #DAEBDB;
+  --blue-glow:   rgba(64,181,180,0.22);
+  --purple:      #59B995;
+  --green:       #59B995;
+  --red:         #15605A;
+  --amber:       #40B5B4;
+  --dark:        #24292D;
+  --dark-2:      #15605A;
+  --text:        #24292D;
+  --muted:       #15605A;
+  --bg-start:    #DAEBDB;
+  --bg-end:      #FFFFFF;
+  --white:       #FFFFFF;
+  --font-main:   'Comfortaa', sans-serif;
   --radius-lg:   20px;
   --radius-xl:   28px;
   --shadow-sm:   0 4px 16px rgba(0,89,226,0.09);
@@ -41,12 +42,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background:
-    linear-gradient(rgba(0,89,226,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,89,226,0.03) 1px, transparent 1px),
-    radial-gradient(ellipse 90% 70% at 60% 40%, #ddf0fb 0%, #c6e5f7 50%, #abd8f7 100%);
-  background-size: 52px 52px, 52px 52px, 100% 100%;
+  font-family: var(--font-main);
+  background: #dfeefe url('img/fondo.png') center center / cover no-repeat;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -66,6 +63,7 @@ body {
   pointer-events: none;
   overflow: hidden;
   z-index: 0;
+  display: none;
 }
 
 .shape {
@@ -157,7 +155,7 @@ body {
    ========================================= */
 .brand-col {
   flex: 0 0 360px;
-  background: linear-gradient(148deg, #0041a8 0%, #0059E2 45%, #1a8cff 100%);
+  background: #FFFFFF;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -171,7 +169,7 @@ body {
   position: absolute;
   left: 0; right: 0;
   height: 120px;
-  background: linear-gradient(180deg, transparent, rgba(255,255,255,0.06), transparent);
+  background: linear-gradient(180deg, transparent, rgba(64,181,180,0.07), transparent);
   animation: scan-line 5s linear infinite;
   pointer-events: none;
 }
@@ -182,8 +180,8 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    linear-gradient(rgba(64,181,180,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(64,181,180,0.06) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
 }
@@ -193,21 +191,23 @@ body {
   z-index: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 20px;
 }
 
 .brand-logo-wrap {
-  width: 80px; height: 80px;
-  border-radius: 22px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1.5px solid rgba(255,255,255,0.3);
+  width: 210px; height: 210px;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px;
-  animation: glow-pulse 3.5s ease-in-out infinite;
+  padding: 0;
+  animation: none;
   margin: 0 auto 4px;
   align-self: center;
 }
@@ -216,11 +216,11 @@ body {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .brand-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: 40px;
   font-weight: 800;
   letter-spacing: -2px;
@@ -230,7 +230,7 @@ body {
 
 .brand-sub {
   font-size: 15px;
-  color: rgba(255,255,255,0.75);
+  color: var(--muted);
   font-weight: 400;
   margin-top: -8px;
 }
@@ -246,18 +246,19 @@ body {
 .feature-item {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 14px;
-  background: rgba(255,255,255,0.1);
+  background: rgba(64,181,180,0.08);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.18);
+  border: 1px solid rgba(64,181,180,0.24);
   border-radius: 14px;
   padding: 12px 16px;
   transition: background 0.25s, transform 0.25s;
 }
 
 .feature-item:hover {
-  background: rgba(255,255,255,0.16);
+  background: rgba(64,181,180,0.14);
   transform: translateX(4px);
 }
 
@@ -265,36 +266,38 @@ body {
   font-size: 22px;
   line-height: 1;
   flex-shrink: 0;
+  color: var(--blue-mid);
 }
 
 .feature-item div {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2px;
 }
 
 .feature-item strong {
   font-size: 13.5px;
   font-weight: 700;
-  color: #fff;
+  color: var(--text);
 }
 
 .feature-item span {
   font-size: 11.5px;
-  color: rgba(255,255,255,0.68);
+  color: var(--muted);
 }
 
 .brand-badge {
   display: inline-block;
   padding: 8px 20px;
-  background: rgba(255,255,255,0.12);
-  border: 1px solid rgba(255,255,255,0.24);
+  background: #DAEBDB;
+  border: 1px solid rgba(89,185,149,0.45);
   border-radius: 100px;
   font-size: 12px;
   font-weight: 700;
-  color: rgba(255,255,255,0.9);
+  color: #15605A;
   letter-spacing: 1px;
-  align-self: flex-start;
+  align-self: center;
   margin-top: 8px;
 }
 
@@ -343,7 +346,7 @@ body {
 }
 
 .form-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: clamp(22px, 3vw, 30px);
   font-weight: 800;
   background: linear-gradient(135deg, #041e3a 0%, var(--blue) 100%);
@@ -430,7 +433,7 @@ select,
 textarea {
   width: 100%;
   padding: 11px 14px 11px 40px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   color: var(--text);
   background: rgba(255,255,255,0.8);
@@ -642,7 +645,7 @@ select {
   color: #fff;
   border: none;
   border-radius: 14px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -748,7 +751,7 @@ select {
 .success-icon svg { width: 46px; height: 46px; }
 
 .success-panel h3 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: 26px;
   font-weight: 800;
   background: linear-gradient(135deg, #041e3a 0%, var(--blue) 100%);
@@ -792,7 +795,7 @@ select {
 .error-icon svg { width: 44px; height: 44px; }
 
 .error-panel h3 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: 24px;
   font-weight: 800;
   color: #b91c1c;
@@ -810,7 +813,7 @@ select {
 .btn-retry {
   padding: 12px 32px;
   border-radius: 12px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -911,7 +914,7 @@ select {
   border: 1.5px solid rgba(0,89,226,0.22);
   border-radius: 10px;
   font-size: 13.5px;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   color: var(--text);
   background: rgba(255,255,255,0.8);
   outline: none;
@@ -1031,7 +1034,7 @@ select {
 .chat-avatar img {
   width: 100%; height: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1);
+  filter: none;
 }
 
 .chat-header-info {
@@ -1219,7 +1222,7 @@ select {
   font-size: 13.5px;
   background: #fff;
   outline: none;
-  font-family: 'Inter', sans-serif;
+  font-family: var(--font-main);
   color: var(--text);
   transition: border-color 0.2s, box-shadow 0.2s;
   margin-bottom: 0;
@@ -1291,7 +1294,7 @@ select {
 }
 
 .data-modal-card h3 {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-main);
   font-size: 18px;
   margin-bottom: 10px;
   color: var(--text);
@@ -1319,6 +1322,15 @@ select {
 
 .data-modal-btn {
   margin-top: 6px;
+  background: linear-gradient(135deg, #59B995 0%, #40B5B4 100%);
+  color: #fff;
+  border: 1.5px solid rgba(21,96,90,0.35);
+  box-shadow: 0 4px 14px rgba(64,181,180,0.25);
+}
+
+.data-modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(64,181,180,0.35);
 }
 
 /* =========================================

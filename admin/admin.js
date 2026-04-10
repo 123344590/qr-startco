@@ -243,7 +243,7 @@ async function openConversation(id) {
     renderModal(data.session, data.messages);
   } catch (err) {
     document.getElementById('modalBody').innerHTML =
-      `<div style="padding:20px;color:#f87171;">Error: ${escHtml(err.message)}</div>`;
+      `<div style="padding:20px;color:#59B995;">Error: ${escHtml(err.message)}</div>`;
   }
 }
 
