@@ -1351,13 +1351,30 @@ select {
     padding: 36px 32px;
   }
 
+  .brand-inner {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .brand-sub {
+    text-align: center;
+    margin-top: 0;
+  }
+
   .brand-features {
     display: flex;
+    width: 100%;
+    align-items: center;
     gap: 10px;
   }
 
   .feature-item {
     padding: 10px 12px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .feature-item strong { font-size: 12.5px; }
@@ -1379,7 +1396,12 @@ select {
   .state-panel { padding: 40px 24px; }
 
   .brand-features { gap: 8px; }
-  .feature-item { gap: 10px; }
+  .feature-item {
+    gap: 8px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .feat-icon { font-size: 18px; }
 
   .data-modal {

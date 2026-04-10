@@ -28,7 +28,7 @@
 
 body {
   font-family: 'Comfortaa', system-ui, sans-serif;
-  background: var(--dark);
+  background: #dfeefe url('/formulario/img/fondo.png') center center / cover no-repeat fixed;
   color: var(--text);
   min-height: 100vh;
   line-height: 1.5;
@@ -43,8 +43,7 @@ body {
   justify-content: center;
   min-height: 100vh;
   padding: 20px;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(64,181,180,.25) 0%, transparent 70%),
-              var(--dark);
+  background: transparent;
 }
 
 .login-card {
@@ -60,20 +59,16 @@ body {
 .login-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   margin-bottom: 28px;
 }
 
 .login-logo img {
-  width: 38px;
-  height: 38px;
-  border-radius: 8px;
-}
-
-.login-logo span {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: .5px;
+  width: 110px;
+  height: 110px;
+  border-radius: 0;
+  object-fit: contain;
+  display: block;
 }
 
 .login-card h1 {
@@ -222,18 +217,13 @@ body {
 .sidebar-logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   padding: 0 8px 24px;
   border-bottom: 1px solid var(--border);
   margin-bottom: 20px;
 }
 
-.sidebar-logo img  { width: 32px; height: 32px; border-radius: 6px; }
-.sidebar-logo span {
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: .3px;
-}
+.sidebar-logo img  { width: 74px; height: 74px; border-radius: 0; }
 
 .sidebar-label {
   font-size: 10px;
