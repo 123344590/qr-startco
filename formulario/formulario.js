@@ -478,6 +478,36 @@ function hidePanel(panel) {
   }
 }
 
+function resetToInitialView() {
+  stopPolling();
+  currentSessionId = null;
+  lastMessageId = 0;
+  hasReceivedMessage = false;
+
+  hidePanel(successPanel);
+  hidePanel(errorPanel);
+
+  if (ticketInfo) ticketInfo.textContent = '';
+  if (chatMessages) chatMessages.innerHTML = '';
+
+  if (formAlert) {
+    formAlert.classList.remove('visible');
+    formAlert.textContent = '';
+  }
+
+  form?.reset();
+  document.getElementById('q1_otro_txt')?.style && (document.getElementById('q1_otro_txt').style.display = 'none');
+
+  document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+  document.querySelectorAll('.field-error.visible').forEach(el => el.classList.remove('visible'));
+
+  if (consentDataChk) consentDataChk.checked = false;
+  clearConsentError('err_data', 'lbl_data');
+  closeDataModal();
+
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+}
+
 // ── Botón: Intentar de nuevo ─────────────────────────────────
 btnRetry.addEventListener('click', () => hidePanel(errorPanel));
 
@@ -525,6 +555,9 @@ acceptDataBtn?.addEventListener('click', () => {
 dataModal?.addEventListener('click', e => {
   if (e.target === dataModal) closeDataModal();
 });
+
+window.addEventListener('load', resetToInitialView);
+window.addEventListener('pageshow', resetToInitialView);
 
 // ── Micro-interacciones en inputs ────────────────────────────
 document.querySelectorAll('.input-wrap').forEach(wrap => {
