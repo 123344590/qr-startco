@@ -197,7 +197,7 @@ body {
 }
 
 .brand-logo-wrap {
-  width: 230px; height: 230px;
+  width: 280px; height: 280px;
   border-radius: 0;
   background: transparent;
   backdrop-filter: none;
@@ -1520,8 +1520,14 @@ body.chat-open .chat-messages {
     max-height: 100dvh;
   }
 
+  body.chat-open .form-card.chat-mode .chat-panel.state-panel {
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+
   body.chat-open .chat-header {
-    padding-top: calc(14px + env(safe-area-inset-top));
+    margin: 6px 8px 0;
+    border-radius: 14px;
+    padding: 12px 14px;
   }
 
   body.chat-open .chat-avatar {
@@ -1571,7 +1577,9 @@ body.chat-open .chat-messages {
 
   body.chat-open .chat-header {
     gap: 8px;
-    padding: calc(10px + env(safe-area-inset-top)) 12px 10px;
+    margin: 8px 8px 0;
+    border-radius: 12px;
+    padding: 11px 12px;
   }
 
   body.chat-open .chat-avatar {
