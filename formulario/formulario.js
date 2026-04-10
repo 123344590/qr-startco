@@ -16,6 +16,13 @@ const ticketInfo   = document.getElementById('ticketInfo');
 const errorMsg     = document.getElementById('errorMsg');
 const btnRetry     = document.getElementById('btnRetry');
 const chatMessages = document.getElementById('chatMessages');
+const formAlert    = document.getElementById('formAlert');
+const dataModal    = document.getElementById('dataModal');
+const openDataBtn  = document.getElementById('openDataModal');
+const closeDataBtn = document.getElementById('closeDataModal');
+const acceptDataBtn = document.getElementById('acceptDataModal');
+const consentDataChk = document.getElementById('consent_data');
+let allowDataConsentProgrammaticCheck = false;
 
 // ── Estado de sesión y polling ─────────────────────────────────
 let currentSessionId    = null;
@@ -39,6 +46,7 @@ if (otroChk && otroTxt) {
     otroTxt.style.display = otroChk.checked ? 'block' : 'none';
     if (otroChk.checked) otroTxt.focus();
   });
+  otroTxt.addEventListener('input', () => clearQuestionError('q1', 'dq1'));
 }
 
 // ── Limpiar errores al interactuar ──────────────────────────
@@ -47,23 +55,106 @@ document.querySelectorAll('input, select, textarea').forEach(el => {
   el.addEventListener('change', () => clearError(el));
 });
 
+document.querySelectorAll('input[name="q1"]').forEach(el => {
+  el.addEventListener('change', () => clearQuestionError('q1', 'dq1'));
+});
+
+['q2','q3','q4','q5','q6'].forEach(q => {
+  document.querySelectorAll(`input[name="${q}"]`).forEach(el => {
+    const qNumber = q.replace('q', '');
+    el.addEventListener('change', () => clearQuestionError(q, `dq${qNumber}`));
+  });
+});
+
+document.getElementById('consent_data')?.addEventListener('change', () => clearConsentError('err_data', 'lbl_data'));
+
 // ── Validación ──────────────────────────────────────────────
 function validateForm() {
   let valid = true;
 
   const nombre = document.getElementById('f_nombre');
+  const telefono = document.getElementById('f_telefono');
   const email  = document.getElementById('f_email');
+  const q1Sel = [...document.querySelectorAll('input[name="q1"]:checked')];
+  const data  = document.getElementById('consent_data');
+  const faltantes = [];
+  let firstInvalid = null;
+
+  const setFirst = el => {
+    if (!firstInvalid) firstInvalid = el;
+  };
 
   if (!nombre.value.trim()) {
     showError(nombre, 'err_nombre');
     valid = false;
+    setFirst(nombre);
+    faltantes.push('Nombre');
   }
 
-  if (email.value.trim()) {
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
-      showError(email, 'err_email');
+  if (!telefono.value.trim()) {
+    showError(telefono, 'err_telefono');
+    valid = false;
+    setFirst(telefono);
+    faltantes.push('Teléfono');
+  } else {
+    const phoneDigits = telefono.value.replace(/\D/g, '');
+    if (phoneDigits.length < 7) {
+      showError(telefono, 'err_telefono');
       valid = false;
+      setFirst(telefono);
+      faltantes.push('Teléfono válido');
     }
+  }
+
+  if (!email.value.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+    showError(email, 'err_email');
+    valid = false;
+    setFirst(email);
+    faltantes.push('Correo electrónico válido');
+  }
+
+  if (!q1Sel.length) {
+    showQuestionError('q1', 'dq1');
+    valid = false;
+    setFirst(document.getElementById('dq1'));
+    faltantes.push('Pregunta 1');
+  }
+
+  const otroChecked = document.getElementById('q1_otro_chk')?.checked;
+  const otroValue = document.getElementById('q1_otro_txt')?.value.trim();
+  if (otroChecked && !otroValue) {
+    showQuestionError('q1', 'dq1');
+    valid = false;
+    setFirst(document.getElementById('q1_otro_txt'));
+    faltantes.push('Especificar “Otro” en la pregunta 1');
+  }
+
+  ['q2','q3','q4','q5','q6'].forEach((q, idx) => {
+    const sel = document.querySelector(`input[name="${q}"]:checked`);
+    if (!sel) {
+      showQuestionError(q, `dq${idx + 2}`);
+      valid = false;
+      setFirst(document.getElementById(`dq${idx + 2}`));
+      faltantes.push(`Pregunta ${idx + 2}`);
+    }
+  });
+
+  if (!data?.checked) {
+    showConsentError('err_data', 'lbl_data');
+    valid = false;
+    setFirst(document.getElementById('consentWrap'));
+    faltantes.push('Aceptar tratamiento de datos');
+  }
+
+  if (!valid) {
+    if (formAlert) {
+      formAlert.innerHTML = `<strong>Te falta completar:</strong><br>${faltantes.map(f => `• ${f}`).join('<br>')}`;
+      formAlert.classList.add('visible');
+    }
+    firstInvalid?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else if (formAlert) {
+    formAlert.classList.remove('visible');
+    formAlert.textContent = '';
   }
 
   return valid;
@@ -77,13 +168,20 @@ function showError(input, errId) {
 }
 
 function clearError(input) {
-  input.classList.remove('invalid');
-  const errId = 'err_' + input.id.replace('f_', '');
-  const el = document.getElementById(errId);
-  if (el) el.classList.remove('visible');
+  if (!input?.id) return;
+  if (input.id.startsWith('f_')) {
+    input.classList.remove('invalid');
+    const errId = 'err_' + input.id.replace('f_', '');
+    const el = document.getElementById(errId);
+    if (el) el.classList.remove('visible');
+  }
+  if (formAlert) {
+    formAlert.classList.remove('visible');
+    formAlert.textContent = '';
+  }
 }
 
-function showCheckboxError(errId, labelId) {
+function showConsentError(errId, labelId) {
   const el = document.getElementById(errId);
   if (el) el.classList.add('visible');
   const lbl = document.getElementById(labelId);
@@ -93,6 +191,31 @@ function showCheckboxError(errId, labelId) {
       chk.style.borderColor = 'var(--red)';
       chk.style.boxShadow   = '0 0 0 3px rgba(239,68,68,0.12)';
     }
+  }
+}
+
+function clearConsentError(errId, labelId) {
+  const el = document.getElementById(errId);
+  if (el) el.classList.remove('visible');
+  const lbl = document.getElementById(labelId);
+  const chk = lbl?.querySelector('.custom-check');
+  if (chk) {
+    chk.style.borderColor = '';
+    chk.style.boxShadow = '';
+  }
+}
+
+function showQuestionError(qName, questionId) {
+  document.getElementById(`err_${qName}`)?.classList.add('visible');
+  document.getElementById(questionId)?.classList.add('invalid');
+}
+
+function clearQuestionError(qName, questionId) {
+  document.getElementById(`err_${qName}`)?.classList.remove('visible');
+  document.getElementById(questionId)?.classList.remove('invalid');
+  if (formAlert) {
+    formAlert.classList.remove('visible');
+    formAlert.textContent = '';
   }
 }
 
@@ -281,7 +404,6 @@ form.addEventListener('submit', async e => {
   e.preventDefault();
 
   if (!validateForm()) {
-    form.querySelector('.invalid')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     return;
   }
 
@@ -346,6 +468,51 @@ function hidePanel(panel) {
 
 // ── Botón: Intentar de nuevo ─────────────────────────────────
 btnRetry.addEventListener('click', () => hidePanel(errorPanel));
+
+// ── Modal tratamiento de datos ───────────────────────────────
+function openDataModal() {
+  dataModal?.classList.add('active');
+  dataModal?.setAttribute('aria-hidden', 'false');
+}
+
+function closeDataModal() {
+  dataModal?.classList.remove('active');
+  dataModal?.setAttribute('aria-hidden', 'true');
+}
+
+openDataBtn?.addEventListener('click', e => {
+  e.preventDefault();
+  openDataModal();
+});
+
+// Reglas de la casilla de datos:
+// - Si el usuario intenta marcarla manualmente, se revierte y se abre modal.
+// - Si el usuario la desmarca manualmente, se permite.
+// - Solo se marca al aceptar dentro del modal.
+consentDataChk?.addEventListener('change', () => {
+  if (consentDataChk.checked && !allowDataConsentProgrammaticCheck) {
+    consentDataChk.checked = false;
+    openDataModal();
+    return;
+  }
+
+  if (!consentDataChk.checked) {
+    clearConsentError('err_data', 'lbl_data');
+  }
+});
+
+closeDataBtn?.addEventListener('click', closeDataModal);
+acceptDataBtn?.addEventListener('click', () => {
+  allowDataConsentProgrammaticCheck = true;
+  if (consentDataChk) consentDataChk.checked = true;
+  allowDataConsentProgrammaticCheck = false;
+  clearConsentError('err_data', 'lbl_data');
+  closeDataModal();
+});
+
+dataModal?.addEventListener('click', e => {
+  if (e.target === dataModal) closeDataModal();
+});
 
 // ── Micro-interacciones en inputs ────────────────────────────
 document.querySelectorAll('.input-wrap').forEach(wrap => {

@@ -90,22 +90,23 @@
 
           <div class="form-row">
             <div class="field-wrap">
-              <label for="f_telefono">Teléfono</label>
+              <label for="f_telefono">Teléfono *</label>
               <div class="input-wrap">
                 <span class="input-icon">
                   <svg viewBox="0 0 20 20" fill="none"><path d="M5.5 3h3l1.5 4-2 1.5a9 9 0 0 0 3.5 3.5L13 10l4 1.5V15a1.5 1.5 0 0 1-1.5 1.5C7.2 16.5 3.5 12.8 3.5 8A1.5 1.5 0 0 1 5 6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
-                <input type="tel" id="f_telefono" name="telefono" placeholder="+52 000 000 0000" maxlength="20">
+                <input type="tel" id="f_telefono" name="telefono" placeholder="+52 000 000 0000" required maxlength="20">
               </div>
+              <span class="field-error" id="err_telefono">Por favor ingresa tu teléfono</span>
             </div>
 
             <div class="field-wrap">
-              <label for="f_email">Correo electrónico</label>
+              <label for="f_email">Correo electrónico *</label>
               <div class="input-wrap">
                 <span class="input-icon">
                   <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="5" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M2 7l8 5 8-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
                 </span>
-                <input type="email" id="f_email" name="email" placeholder="tu@empresa.com" maxlength="150">
+                <input type="email" id="f_email" name="email" placeholder="tu@empresa.com" required maxlength="150">
               </div>
               <span class="field-error" id="err_email">Ingresa un correo válido</span>
             </div>
@@ -130,6 +131,7 @@
               </label>
             </div>
             <input type="text" class="otro-input" id="q1_otro_txt" placeholder="¿Cuál canal?" maxlength="80" style="display:none">
+            <span class="field-error" id="err_q1">Selecciona al menos un canal</span>
           </div>
 
           <!-- Q2: Centralización (radio) -->
@@ -149,6 +151,7 @@
                 <span class="radio-text">No tenemos proceso definido</span>
               </label>
             </div>
+            <span class="field-error" id="err_q2">Selecciona una opción en la pregunta 2</span>
           </div>
 
           <!-- Q3: Seguimiento (radio) -->
@@ -172,6 +175,7 @@
                 <span class="radio-text">De memoria, sin registro</span>
               </label>
             </div>
+            <span class="field-error" id="err_q3">Selecciona una opción en la pregunta 3</span>
           </div>
 
           <!-- Q4: Visibilidad pipeline (radio) -->
@@ -191,6 +195,7 @@
                 <span class="radio-text">No, no tenemos esa visibilidad</span>
               </label>
             </div>
+            <span class="field-error" id="err_q4">Selecciona una opción en la pregunta 4</span>
           </div>
 
           <!-- Q5: CRM previo (radio) -->
@@ -210,6 +215,7 @@
                 <span class="radio-text">Nunca hemos usado un CRM</span>
               </label>
             </div>
+            <span class="field-error" id="err_q5">Selecciona una opción en la pregunta 5</span>
           </div>
 
           <!-- Q6: Apertura digital (radio) -->
@@ -229,7 +235,22 @@
                 <span class="radio-text">Hay resistencia al cambio</span>
               </label>
             </div>
+            <span class="field-error" id="err_q6">Selecciona una opción en la pregunta 6</span>
           </div>
+
+          <!-- Consentimientos obligatorios -->
+          <div class="consent-wrap" id="consentWrap">
+            <label class="checkbox-wrap" id="lbl_data">
+              <input type="checkbox" id="consent_data" required>
+              <span class="custom-check">
+                <svg viewBox="0 0 16 12" fill="none"><path d="M1.5 6.5L5.5 10.5L14.5 1.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <span>Acepto el <a href="#" class="link" id="openDataModal">tratamiento de datos personales</a>.</span>
+            </label>
+            <span class="field-error checkbox-error" id="err_data">Debes aceptar el tratamiento de datos</span>
+          </div>
+
+          <div class="form-alert" id="formAlert" aria-live="polite"></div>
 
           <!-- Botón de envío -->
           <button type="submit" class="btn-submit" id="btnSubmit">
@@ -283,6 +304,24 @@
     </section>
 
   </main>
+
+  <!-- Modal: Tratamiento de datos -->
+  <div class="data-modal" id="dataModal" aria-hidden="true">
+    <div class="data-modal-card" role="dialog" aria-modal="true" aria-labelledby="dataModalTitle">
+      <button class="data-modal-close" id="closeDataModal" aria-label="Cerrar">✕</button>
+      <h3 id="dataModalTitle">Tratamiento de datos personales</h3>
+      <p>
+        Autorizo a T-ASISTO a recolectar y tratar mis datos personales con la finalidad de
+        contactarme, presentar soluciones comerciales y hacer seguimiento a mi solicitud.
+      </p>
+      <p>
+        Mis datos no serán compartidos con terceros no autorizados y serán tratados conforme
+        a la normativa aplicable de protección de datos. Consulta la política completa
+        <a href="https://www.minambiente.gov.co/politica-de-proteccion-de-datos-personales/" target="_blank" rel="noopener noreferrer" class="link">aquí</a>.
+      </p>
+      <button class="btn-retry data-modal-btn" id="acceptDataModal">Entendido</button>
+    </div>
+  </div>
 
   <script src="formulario.js"></script>
 </body>
