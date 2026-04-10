@@ -1032,8 +1032,8 @@ select {
 .chat-avatar {
   width: 40px; height: 40px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.18);
-  border: 2px solid rgba(255,255,255,0.38);
+  background: #FFFFFF;
+  border: 2px solid rgba(218,235,219,0.95);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1300,11 +1300,7 @@ body.chat-open .page-wrapper {
 }
 
 body.chat-open .brand-col {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding-top: 18px;
-  overflow-y: auto;
+  display: none;
 }
 
 body.chat-open .brand-inner {
@@ -1314,6 +1310,7 @@ body.chat-open .brand-inner {
 
 body.chat-open .form-col {
   width: 100%;
+  height: 100%;
 }
 
 .form-card.chat-mode {
@@ -1398,6 +1395,9 @@ body.chat-open .chat-messages {
 
 .data-modal-btn {
   margin-top: 6px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   background: linear-gradient(135deg, #59B995 0%, #40B5B4 100%);
   color: #fff;
   border: 1.5px solid rgba(21,96,90,0.35);
@@ -1491,17 +1491,12 @@ body.chat-open .chat-messages {
   }
 
   body.chat-open .brand-col {
-    display: flex;
-    height: 38dvh;
-    min-height: 250px;
-    max-height: 40dvh;
-    padding: 16px 18px;
-    overflow-y: auto;
+    display: none;
   }
 
   body.chat-open .form-col {
-    flex: none;
-    height: 62dvh;
+    flex: 1;
+    height: 100dvh;
     min-height: 0;
   }
 
