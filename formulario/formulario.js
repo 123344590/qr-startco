@@ -461,6 +461,7 @@ form.addEventListener('submit', async e => {
 function showPanel(panel) {
   panel.classList.add('visible');
   if (panel === successPanel) {
+    document.documentElement.classList.add('chat-open');
     document.body.classList.add('chat-open');
     formCard?.classList.add('chat-mode');
     return;
@@ -471,6 +472,7 @@ function showPanel(panel) {
 function hidePanel(panel) {
   panel.classList.remove('visible');
   if (panel === successPanel) {
+    document.documentElement.classList.remove('chat-open');
     document.body.classList.remove('chat-open');
     formCard?.classList.remove('chat-mode');
   }
